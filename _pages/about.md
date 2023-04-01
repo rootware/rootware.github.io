@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: "academicpages is a ready-to-fork GitHub Pages template for academic personal websites"
+title: "Shah Saad Alam"
 excerpt: "About me"
 author_profile: true
 redirect_from: 
@@ -8,4 +8,4 @@ redirect_from:
   - /about.html
 ---
 
-Hi, I'm Shah. Testing this website build.
+Hi, I'm Shah. My research interests are in quantum many body physics theory, using machine learning to solve quantum systems, and using machine learning to design quantum circuits.
