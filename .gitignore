@@ -1,0 +1,7 @@
+public/
+build/
+install/
+log/
+elsie-cache/
+__pycache__/
+.venv/
