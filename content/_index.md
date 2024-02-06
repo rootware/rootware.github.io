@@ -9,7 +9,7 @@ title = "Home"
   <div class="home-content">
 
 I'm Shah.
-I work at  ... \\( \KaTeX \\)
+I work at  ... 
 
   </div>
 
