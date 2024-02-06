@@ -14,7 +14,7 @@ I work at  ... $$ \pi $$
   </div>
 
   <div class="home-image">
-    <img src="/rootware_zola/images/profile.jpg" alt="Profile Image" class="img-rounded" />
+    <img src="/images/profile.jpg" alt="Profile Image" class="img-rounded" />
   </div>
 
 </div>
