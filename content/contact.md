@@ -2,7 +2,7 @@
 title = "Contact Me"
 +++
 
-Email: shah.saad.alam@gmail.com
+Email: ShahSaad [dot] Alam [at] colorado [dot] edu
 
 
 - GitHub: [rootware](https://github.com/rootware)
