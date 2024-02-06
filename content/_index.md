@@ -22,5 +22,5 @@ I usually like working on diverse topics. On the physics side, I work in quantum
 
 ## ⭐ Selected Projects
 - Interpreting convolutional neural networks and using them as a variational quantum algorithm for qubit systems [paper](https://arxiv.org/abs/2210.00692)
-- Using reinforcement learning to optimize design of quantum sensors and circuits [Sample Github 1](https://github.com/rootware/lattice_revolution),  [Sample Github 2](https://github.com/rootware/BayesianData)
+- Using reinforcement learning to optimize design of quantum sensors and circuits [Sample Github 1](https://github.com/rootware/lattice_evolution),  [Sample Github 2](https://github.com/rootware/BayesianData)
 - Using Neural Networks to Solve Hamiltonians [Demo](https://github.com/rootware/RBM-for-Quantum-Spin-Hamiltonians)
