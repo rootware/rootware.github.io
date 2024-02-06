@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://rootware.github.io/rootware_zola/</loc>
+    </url>
+    <url>
+        <loc>https://rootware.github.io/rootware_zola/contact/</loc>
+    </url>
+    <url>
+        <loc>https://rootware.github.io/rootware_zola/posts/</loc>
+    </url>
+    <url>
+        <loc>https://rootware.github.io/rootware_zola/posts/battlesnake/</loc>
+        <lastmod>2023-12-04</lastmod>
+    </url>
+    <url>
+        <loc>https://rootware.github.io/rootware_zola/posts/roscon23-parameters/</loc>
+        <lastmod>2023-10-20</lastmod>
+    </url>
+    <url>
+        <loc>https://rootware.github.io/rootware_zola/posts/rust-cpp-interop/</loc>
+        <lastmod>2024-02-04</lastmod>
+    </url>
+    <url>
+        <loc>https://rootware.github.io/rootware_zola/posts/xml-launch/</loc>
+        <lastmod>2023-09-04</lastmod>
+    </url>
+    <url>
+        <loc>https://rootware.github.io/rootware_zola/tags/</loc>
+    </url>
+    <url>
+        <loc>https://rootware.github.io/rootware_zola/tags/talks/</loc>
+    </url>
+    <url>
+        <loc>https://rootware.github.io/rootware_zola/talks/</loc>
+    </url>
+</urlset>

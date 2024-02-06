@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROSCON 2023 - Parameters Should be Boring | </title>
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
+    <meta name="title" content="ROSCON 2023 - Parameters Should be Boring">
+<meta property="og:site_name" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ROSCON 2023 - Parameters Should be Boring">
+<meta property="og:description" content="generate_parameter_library">
+<meta property="og:url" content="https://rootware.github.io/rootware_zola/https://rootware.github.io/rootware_zola/posts/roscon23-parameters/">
+
+<meta property="article:published_time" content="2023-10-20">
+    <meta property="article:modified_time" content="2023-10-20">
+
+    <meta property="article:tag" content="Talks">
+        <meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ROSCON 2023 - Parameters Should be Boring">
+<meta name="twitter:description" content="generate_parameter_library">
+<meta name="twitter:url" content="https://rootware.github.io/rootware_zola/https://rootware.github.io/rootware_zola/posts/roscon23-parameters/">
+
+<meta name="twitter:site" content="@mrkaran_">
+
+<meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Tyler Weaver">
+
+    <meta name="twitter:label2" content="Filed under">
+        <meta name="twitter:data2" content="Talks">
+    <meta name="twitter:creator" content="@mrkaran_">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=IBM+Plex+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://rootware.github.io/rootware_zola/styles/main.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.1/feather.min.js" integrity="sha512-4lykFR6C2W55I60sYddEGjieC2fU79R7GUtaqr3DzmNbo0vSaO1MfUjMoTFYYuedjfEix6uV9jVTtRCSBU/Xiw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script defer data-domain="mrkaran.dev" src="https://pls.mrkaran.dev/js/script.js"></script>
+</head>
+<body>
+<header>
+    <a href="https://rootware.github.io/rootware_zola/" class="title">
+        <h2 class="name"></h2>
+    </a>
+    <nav>
+        <div class="nav-items">
+            <a href="https://rootware.github.io/rootware_zola/">Home</a>
+            <a href="https://rootware.github.io/rootware_zola/posts/">Posts</a>
+            <a href="https://rootware.github.io/rootware_zola/talks.md">CV and Resume</a>
+            <a href="https://rootware.github.io/rootware_zola/contact/">Contact</a></div>
+        <button class="theme-toggle" title="Toggle Dark Mode">
+            <i data-feather="moon"></i>
+        </button>
+    </nav>
+</header>
+
+    <h1>ROSCON 2023 - Parameters Should be Boring</h1>
+    <div class="meta">
+      <div class="post-date">
+              <i>
+                  <time datetime='2023-10-20T00:00:00+00:00' pubdate>20 Oct, 2023</time>
+              </i>
+      </div>
+      <div class="reading-time">
+          
+          
+          <i>2 minutes (377 words)</i>
+      </div>
+  </div>
+  <main>
+    <ul>
+<li><a href="/pdf/roscon23_parameters.pdf">Slides PDF</a></li>
+<li><a href="https://github.com/PickNikRobotics/generate_parameter_library">generate_parameter_library</a></li>
+</ul>
+<h2 id="ros-parameter-references"><a class="zola-anchor" href="#ros-parameter-references" aria-label="Anchor link for: ros-parameter-references">🔗</a>ROS Parameter References</h2>
+<ul>
+<li><a href="https://docs.ros.org/en/rolling/Concepts/Basic/About-Parameters.html">Parameter Concept</a></li>
+<li><a href="https://docs.ros.org/en/rolling/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Parameters/Understanding-ROS2-Parameters.html">Understanding ROS 2 Parameters Tutorial</a></li>
+<li><a href="https://docs.ros.org/en/rolling/Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-CPP.html">Using parameters in a class (C++)</a></li>
+<li><a href="https://docs.ros.org/en/rolling/Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-Python.html">Using parameters in a class (Python)</a></li>
+<li><a href="https://docs.ros.org/en/rolling/How-To-Guides/Migrating-from-ROS1/Migrating-Launch-Files.html">Migrating Launch Files</a></li>
+<li><a href="https://docs.ros.org/en/rolling/How-To-Guides/Migrating-from-ROS1/Migrating-Parameters.html">Migrating Parameters</a></li>
+<li><a href="https://github.com/ros2/demos/blob/rolling/demo_nodes_cpp/src/parameters/parameter_blackboard.cpp">parameter_blackboard source</a></li>
+<li><a href="https://design.ros2.org/articles/ros_parameters.html">Parameter API design in ROS</a></li>
+</ul>
+<h2 id="elsie"><a class="zola-anchor" href="#elsie" aria-label="Anchor link for: elsie">🔗</a>Elsie</h2>
+<p>The slides for this presentation were generated using a python library called <a href="https://spirali.github.io/elsie/">Elsie</a>.
+This is my second presentation I’ve created using this library and I am a huge fan.
+Here is a small snippet from the source of this presentation showing how I defined the header of each slide and the layout of the slides with code blocks.</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#6c7079;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#cd74e8;">def </span><span style="color:#5cb3fa;">logo_header_slide</span><span style="color:#abb2bf;">(</span><span style="color:#eb6772;">parent</span><span style="color:#abb2bf;">: Box, </span><span style="color:#eb6772;">title</span><span style="color:#abb2bf;">: str):
+</span><span style="color:#abb2bf;">    parent.</span><span style="color:#eb6772;">box</span><span style="color:#abb2bf;">(</span><span style="color:#eb6772;">x</span><span style="color:#adb7c9;">=</span><span style="color:#db9d63;">1570</span><span style="color:#abb2bf;">, </span><span style="color:#eb6772;">y</span><span style="color:#adb7c9;">=</span><span style="color:#db9d63;">40</span><span style="color:#abb2bf;">).</span><span style="color:#eb6772;">image</span><span style="color:#abb2bf;">(</span><span style="color:#9acc76;">&quot;picknik_logo.png&quot;</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">    parent.</span><span style="color:#eb6772;">sbox</span><span style="color:#abb2bf;">(</span><span style="color:#eb6772;">name</span><span style="color:#adb7c9;">=</span><span style="color:#9acc76;">&quot;header&quot;</span><span style="color:#abb2bf;">, </span><span style="color:#eb6772;">x</span><span style="color:#adb7c9;">=</span><span style="color:#db9d63;">0</span><span style="color:#abb2bf;">, </span><span style="color:#eb6772;">height</span><span style="color:#adb7c9;">=</span><span style="color:#db9d63;">140</span><span style="color:#abb2bf;">).</span><span style="color:#eb6772;">fbox</span><span style="color:#abb2bf;">(</span><span style="color:#eb6772;">p_left</span><span style="color:#adb7c9;">=</span><span style="color:#db9d63;">20</span><span style="color:#abb2bf;">).</span><span style="color:#eb6772;">text</span><span style="color:#abb2bf;">(
+</span><span style="color:#abb2bf;">        title, elsie.</span><span style="color:#eb6772;">TextStyle</span><span style="color:#abb2bf;">(</span><span style="color:#eb6772;">bold</span><span style="color:#adb7c9;">=</span><span style="color:#db9d63;">True</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">    )
+</span><span style="color:#abb2bf;">    </span><span style="color:#cd74e8;">return </span><span style="color:#abb2bf;">parent.</span><span style="color:#eb6772;">fbox</span><span style="color:#abb2bf;">(</span><span style="color:#eb6772;">name</span><span style="color:#adb7c9;">=</span><span style="color:#9acc76;">&quot;content&quot;</span><span style="color:#abb2bf;">, </span><span style="color:#eb6772;">p_left</span><span style="color:#adb7c9;">=</span><span style="color:#db9d63;">20</span><span style="color:#abb2bf;">, </span><span style="color:#eb6772;">p_right</span><span style="color:#adb7c9;">=</span><span style="color:#db9d63;">20</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">
+</span><span style="color:#abb2bf;">
+</span><span style="color:#cd74e8;">def </span><span style="color:#5cb3fa;">code_slide</span><span style="color:#abb2bf;">(</span><span style="color:#eb6772;">parent</span><span style="color:#abb2bf;">: Box, </span><span style="color:#eb6772;">title</span><span style="color:#abb2bf;">: str, </span><span style="color:#eb6772;">language</span><span style="color:#abb2bf;">: str, </span><span style="color:#eb6772;">code</span><span style="color:#abb2bf;">: str):
+</span><span style="color:#abb2bf;">    content </span><span style="color:#adb7c9;">= </span><span style="color:#eb6772;">logo_header_slide</span><span style="color:#abb2bf;">(parent, title)
+</span><span style="color:#abb2bf;">    code_bg </span><span style="color:#adb7c9;">= </span><span style="color:#9acc76;">&quot;#F6F8FA&quot;
+</span><span style="color:#abb2bf;">    box </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">content.</span><span style="color:#eb6772;">box</span><span style="color:#abb2bf;">(</span><span style="color:#eb6772;">y</span><span style="color:#adb7c9;">=</span><span style="color:#db9d63;">0</span><span style="color:#abb2bf;">, </span><span style="color:#eb6772;">width</span><span style="color:#adb7c9;">=</span><span style="color:#9acc76;">&quot;100%&quot;</span><span style="color:#abb2bf;">, </span><span style="color:#eb6772;">height</span><span style="color:#adb7c9;">=</span><span style="color:#9acc76;">&quot;100%&quot;</span><span style="color:#abb2bf;">, </span><span style="color:#eb6772;">p_bottom</span><span style="color:#adb7c9;">=</span><span style="color:#db9d63;">20</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">    box.</span><span style="color:#eb6772;">rect</span><span style="color:#abb2bf;">(</span><span style="color:#eb6772;">bg_color</span><span style="color:#adb7c9;">=</span><span style="color:#abb2bf;">code_bg, </span><span style="color:#eb6772;">rx</span><span style="color:#adb7c9;">=</span><span style="color:#db9d63;">20</span><span style="color:#abb2bf;">, </span><span style="color:#eb6772;">ry</span><span style="color:#adb7c9;">=</span><span style="color:#db9d63;">20</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">    box.</span><span style="color:#eb6772;">overlay</span><span style="color:#abb2bf;">()
+</span><span style="color:#abb2bf;">       .</span><span style="color:#eb6772;">box</span><span style="color:#abb2bf;">(</span><span style="color:#eb6772;">x</span><span style="color:#adb7c9;">=</span><span style="color:#db9d63;">0</span><span style="color:#abb2bf;">, </span><span style="color:#eb6772;">y</span><span style="color:#adb7c9;">=</span><span style="color:#db9d63;">0</span><span style="color:#abb2bf;">, </span><span style="color:#eb6772;">p_left</span><span style="color:#adb7c9;">=</span><span style="color:#db9d63;">20</span><span style="color:#abb2bf;">, </span><span style="color:#eb6772;">p_right</span><span style="color:#adb7c9;">=</span><span style="color:#db9d63;">20</span><span style="color:#abb2bf;">, </span><span style="color:#eb6772;">p_top</span><span style="color:#adb7c9;">=</span><span style="color:#db9d63;">20</span><span style="color:#abb2bf;">, </span><span style="color:#eb6772;">p_bottom</span><span style="color:#adb7c9;">=</span><span style="color:#db9d63;">20</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">       .</span><span style="color:#eb6772;">code</span><span style="color:#abb2bf;">(language, code)
+</span></code></pre>
+<p>You can find the <a href="https://github.com/tylerjw/tylerjw.dev/blob/main/slides/roscon23_parameters.py">full source of the talk slides here</a>.</p>
+
+  </main>
+  <p class="tags">
+        Tags:
+          <a href="https://rootware.github.io/rootware_zola/tags/talks/">#Talks</a>
+  </p>
+<footer>
+    © 2023 Shah Saad Alam<br>
+    <div class="social-links">
+        <a href="https://github.com/rootware" target="_blank" rel="noopener noreferrer" title="GitHub" class="social-icon"><i data-feather="github"></i></a>
+        <a href="https://scholar.google.com/citations?user=dpsqpvYAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" title="Google Scholar" class="social-icon"><i data-feather="rss"></i></a>
+    </div> 
+</footer>
+<script>
+    feather.replace();
+    const themeToggle = document.querySelector('.theme-toggle');
+    const currentTheme = localStorage.getItem('theme');
+
+    // Set the initial theme based on user preference or localStorage
+    if (currentTheme) {
+        document.body.setAttribute('data-theme', currentTheme);
+        if (currentTheme === 'dark') {
+            themeToggle.innerHTML = '<i data-feather="sun"></i>';
+            feather.replace();
+        }
+    }
+
+    themeToggle.addEventListener('click', function() {
+        let theme = 'light';
+
+        // Add the transition class
+        document.body.classList.add('theme-transition');
+
+        if (document.body.getAttribute('data-theme') !== 'dark') {
+            theme = 'dark';
+            themeToggle.innerHTML = '<i data-feather="sun"></i>';
+        } else {
+            themeToggle.innerHTML = '<i data-feather="moon"></i>';
+        }
+        feather.replace();
+        document.body.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+
+        // Remove the transition class after 0.5s
+        setTimeout(() => {
+            document.body.classList.remove('theme-transition');
+        }, 500);
+    });
+</script>
+</html>

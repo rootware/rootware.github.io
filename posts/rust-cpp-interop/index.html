@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boulder Rust - C++ Interop | </title>
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
+    <meta name="title" content="Boulder Rust - C++ Interop">
+<meta property="og:site_name" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Boulder Rust - C++ Interop">
+<meta property="og:description" content="Together We Are Better">
+<meta property="og:url" content="https://rootware.github.io/rootware_zola/https://rootware.github.io/rootware_zola/posts/rust-cpp-interop/">
+
+<meta property="article:published_time" content="2024-02-04">
+    <meta property="article:modified_time" content="2024-02-04">
+
+    <meta property="article:tag" content="Talks">
+        <meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Boulder Rust - C++ Interop">
+<meta name="twitter:description" content="Together We Are Better">
+<meta name="twitter:url" content="https://rootware.github.io/rootware_zola/https://rootware.github.io/rootware_zola/posts/rust-cpp-interop/">
+
+<meta name="twitter:site" content="@mrkaran_">
+
+<meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Tyler Weaver">
+
+    <meta name="twitter:label2" content="Filed under">
+        <meta name="twitter:data2" content="Talks">
+    <meta name="twitter:creator" content="@mrkaran_">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=IBM+Plex+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://rootware.github.io/rootware_zola/styles/main.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.1/feather.min.js" integrity="sha512-4lykFR6C2W55I60sYddEGjieC2fU79R7GUtaqr3DzmNbo0vSaO1MfUjMoTFYYuedjfEix6uV9jVTtRCSBU/Xiw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script defer data-domain="mrkaran.dev" src="https://pls.mrkaran.dev/js/script.js"></script>
+</head>
+<body>
+<header>
+    <a href="https://rootware.github.io/rootware_zola/" class="title">
+        <h2 class="name"></h2>
+    </a>
+    <nav>
+        <div class="nav-items">
+            <a href="https://rootware.github.io/rootware_zola/">Home</a>
+            <a href="https://rootware.github.io/rootware_zola/posts/">Posts</a>
+            <a href="https://rootware.github.io/rootware_zola/talks.md">CV and Resume</a>
+            <a href="https://rootware.github.io/rootware_zola/contact/">Contact</a></div>
+        <button class="theme-toggle" title="Toggle Dark Mode">
+            <i data-feather="moon"></i>
+        </button>
+    </nav>
+</header>
+
+    <h1>Boulder Rust - C++ Interop</h1>
+    <div class="meta">
+      <div class="post-date">
+              <i>
+                  <time datetime='2024-02-04T00:00:00+00:00' pubdate>04 Feb, 2024</time>
+              </i>
+      </div>
+      <div class="reading-time">
+          
+          
+          <i>9 minutes (2209 words)</i>
+      </div>
+  </div>
+  <main>
+    <h2 id="a-collective-craft"><a class="zola-anchor" href="#a-collective-craft" aria-label="Anchor link for: a-collective-craft">🔗</a>A Collective Craft</h2>
+<p>Before we can talk about how we must discuss why.
+I will presume these things:</p>
+<ul>
+<li>You want to work in Rust</li>
+<li>You have coworkers who use C++</li>
+</ul>
+<p>This is the situation I find myself in.
+The primary objections I heard using Rust in projects at work are social and not technical in nature.
+Here are some that I have heard:</p>
+<blockquote>
+<p>It is easier for everyone on the project if we use one language. Using multiple languages will make it harder for me to contribute. I fear that if we write it in Rust we will not be able to hire people to work on this codebase.</p>
+</blockquote>
+<p>Research has demonstrated that <a href="https://www.mckinsey.com/capabilities/people-and-organizational-performance/our-insights/why-diversity-matters">diversity leads to better business outcomes</a>.
+It is also better for our projects.
+Homogeneous projects may feel more comfortable.
+The fear of <em>the other</em> and the desire for comfort is the underlying motivations in these statements.</p>
+<p>Programming is a craft and the quality of the outcome of our work is improved by working together from different perspectives.
+C++, the projects built in it, and the programmers who use it have value.
+Rust brings new ideas and new perspectives and building a bridge within our projects can lead to code-bases that are better than they were as homogeneous projects.</p>
+<p>Writing software is a team sport where we want to welcome a diversity of ideas and approaches to find the best solutions to any given problem.
+Even if you wanted to rewrite a large C++ project into Rust that is unlikely to be possible given project timelines and the makeup of your team.
+If you have a C++ codebase you likely have C++ programmers as coworkers and you will be more likely to win their support if you build a bridge.</p>
+<h2 id="code-generation"><a class="zola-anchor" href="#code-generation" aria-label="Anchor link for: code-generation">🔗</a>Code Generation</h2>
+<p>There are a handful of amazing projects aimed at automating the process of creating bridges towards and from C++.</p>
+<ul>
+<li><a href="https://cxx.rs/">cxx</a> – Safe interop between Rust and C++</li>
+<li><a href="https://rust-lang.github.io/rust-bindgen/">bindgen</a> – generate Rust FFI bindings to C/C++ libraries</li>
+<li><a href="https://github.com/mozilla/cbindgen">cbindgen</a> – generate C/C++11 headers for Rust librararies which expose a public C API</li>
+</ul>
+<p>Due to my desire to create interfaces involving library types in Rust and C++ that felt first class in both languages none of these tools met my requirements.
+At PickNik we write robotics code and much of C++ code uses <a href="https://eigen.tuxfamily.org/index.php?title=Main_Page">Eigen</a> types.
+In Rust I wanted to use <a href="https://docs.rs/nalgebra/latest/nalgebra/">nalgebra</a> types to represent the same concepts.</p>
+<h2 id="on-the-shoulders-of-giants"><a class="zola-anchor" href="#on-the-shoulders-of-giants" aria-label="Anchor link for: on-the-shoulders-of-giants">🔗</a>On the Shoulders of Giants</h2>
+<p><a href="https://github.com/kylc/optik">OptIk</a> is the project I learned much of this from.
+Look to it for a complete example of these techniques.</p>
+<h2 id="system-design"><a class="zola-anchor" href="#system-design" aria-label="Anchor link for: system-design">🔗</a>System Design</h2>
+<p>Interop to C++ is done via the classic hourglass approach.
+We bridge the Rust library to C and then create C++ types that safely use the C interface.
+This is the same way interop to other languages such as Python works.</p>
+<p>For C++ to call Rust functions that take Rust objects as arguments we need a way for C++ to have those Rust objects.
+To do this we must create Rust objects and leak pointers to them to the C++ code.
+We also include functions in Rust that can destruct these objects given a pointer to one.
+From these two building blocks we can use a C++ class which holds the opaque pointers and manages freeing them using the C++ destructor.
+One important reason this is necessary is that allocators and deallocators come in pairs.
+It is not valid to destruct a Rust object with the C++ deallocator or vice-versa.</p>
+<p>In cases where we need to create C++ library types from Rust library types such as creating a <code>Eigen::Isometry3d</code> from a <code>nalgebra::geometry::Isometry3</code> we must copy the underlying data instead of sharing the memory.
+This is because in C++ there is no way for us to extend a library type to handle destruction of the underlying memory using a different deallocator.
+Similar to the custom type situation above with the opaque types we must have an unsafe rust function to free the memory for the Rust types and call it before returning from our C++ function.</p>
+<p>There is the concnern of how do we integrate with a C++ build system.
+As the C++ code at my work uses CMake I will show how to bridge to CMake.</p>
+<p>For code-layout I’m going to separate my project into two different Rust crates (packages).</p>
+<ul>
+<li><code>robot_joint</code> – Rust library I want to use from C++</li>
+<li><code>robot_joint-cpp</code> – C++ interop layer</li>
+</ul>
+<h2 id="custom-opaque-types"><a class="zola-anchor" href="#custom-opaque-types" aria-label="Anchor link for: custom-opaque-types">🔗</a>Custom Opaque Types</h2>
+<p>Given this Rust struct and factory function we need to create a C interface.</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#6c7079;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#cd74e8;">pub struct </span><span style="color:#abb2bf;">Joint {
+</span><span style="color:#abb2bf;">    </span><span style="color:#eb6772;">name</span><span style="color:#abb2bf;">: String,
+</span><span style="color:#abb2bf;">    </span><span style="color:#eb6772;">parent_link_to_joint_origin</span><span style="color:#abb2bf;">: Isometry3&lt;</span><span style="color:#cd74e8;">f64</span><span style="color:#abb2bf;">&gt;,
+</span><span style="color:#abb2bf;">}
+</span><span style="color:#abb2bf;">
+</span><span style="color:#cd74e8;">impl </span><span style="color:#abb2bf;">Joint {
+</span><span style="color:#abb2bf;">    </span><span style="color:#cd74e8;">pub fn </span><span style="color:#5cb3fa;">new</span><span style="color:#abb2bf;">() -&gt; </span><span style="color:#cd74e8;">Self</span><span style="color:#abb2bf;">;
+</span><span style="color:#abb2bf;">}
+</span></code></pre>
+<p>Over in <code>robot_joint-cpp</code> I create a <code>lib.rs</code> with these details:</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#6c7079;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#cd74e8;">use </span><span style="color:#abb2bf;">robot_joint::Joint;
+</span><span style="color:#abb2bf;">
+</span><span style="color:#abb2bf;">#[</span><span style="color:#eb6772;">no_mangle</span><span style="color:#abb2bf;">]
+</span><span style="color:#cd74e8;">extern </span><span style="color:#9acc76;">&quot;C&quot; </span><span style="color:#cd74e8;">fn </span><span style="color:#5cb3fa;">robot_joint_new</span><span style="color:#abb2bf;">() -&gt; </span><span style="color:#cd74e8;">*mut</span><span style="color:#abb2bf;"> Joint {
+</span><span style="color:#abb2bf;">    Box::into_raw(Box::new(Joint::new()))
+</span><span style="color:#abb2bf;">}
+</span><span style="color:#abb2bf;">
+</span><span style="color:#abb2bf;">#[</span><span style="color:#eb6772;">no_mangle</span><span style="color:#abb2bf;">]
+</span><span style="color:#cd74e8;">extern </span><span style="color:#9acc76;">&quot;C&quot; </span><span style="color:#cd74e8;">fn </span><span style="color:#5cb3fa;">robot_joint_free</span><span style="color:#abb2bf;">(</span><span style="color:#eb6772;">joint</span><span style="color:#abb2bf;">: </span><span style="color:#cd74e8;">*mut</span><span style="color:#abb2bf;"> Joint) {
+</span><span style="color:#abb2bf;">    </span><span style="color:#cd74e8;">unsafe </span><span style="color:#abb2bf;">{
+</span><span style="color:#abb2bf;">        </span><span style="color:#5ebfcc;">drop</span><span style="color:#abb2bf;">(Box::from_raw(joint));
+</span><span style="color:#abb2bf;">    }
+</span><span style="color:#abb2bf;">}
+</span></code></pre>
+<p>Each of these functions need the <code>#[no_mangle]</code>  attribute to turn off Rust name mangling and <code>extern &quot;C&quot;</code> to give the function the C calling convention.
+<code>Box::into_raw(Box::new(</code> is a technique for creating a Rust object on the heap and leaking a pointer to it.
+Lastly, <code>drop(Box::from_raw</code> is a way to take a pointer and convert it back into a Box type and destroy it.</p>
+<p>Next we create a C++ header <code>robot_joint.hpp</code>:</p>
+<pre data-lang="C++" style="background-color:#2b303b;color:#6c7079;" class="language-C++ "><code class="language-C++" data-lang="C++"><span style="color:#cd74e8;">namespace </span><span style="color:#abb2bf;">robot_joint {
+</span><span style="color:#cd74e8;">namespace </span><span style="color:#abb2bf;">rust {
+</span><span style="font-style:italic;color:#5f697a;">// Opaque type for holding pointer to rust object
+</span><span style="color:#cd74e8;">struct </span><span style="color:#abb2bf;">Joint;
+</span><span style="color:#abb2bf;">}
+</span><span style="color:#abb2bf;">
+</span><span style="color:#cd74e8;">class </span><span style="color:#f0c678;">Joint </span><span style="color:#adb7c9;">{
+</span><span style="color:#adb7c9;">  </span><span style="color:#cd74e8;">public</span><span style="color:#adb7c9;">:
+</span><span style="color:#adb7c9;">    </span><span style="color:#5cb3fa;">Joint</span><span style="color:#adb7c9;">();
+</span><span style="color:#adb7c9;">    </span><span style="color:#5cb3fa;">~Joint</span><span style="color:#adb7c9;">();
+</span><span style="color:#adb7c9;">
+</span><span style="color:#adb7c9;">    </span><span style="font-style:italic;color:#5f697a;">// Disable copy as we cannot safely copy opaque pointers to rust objects.
+</span><span style="color:#adb7c9;">    </span><span style="color:#5cb3fa;">Joint</span><span style="color:#adb7c9;">(Joint&amp; </span><span style="color:#eb6772;">other</span><span style="color:#adb7c9;">) = </span><span style="color:#cd74e8;">delete</span><span style="color:#adb7c9;">;
+</span><span style="color:#adb7c9;">    Joint&amp; </span><span style="color:#5cb3fa;">operator=</span><span style="color:#adb7c9;">(Joint&amp; </span><span style="color:#eb6772;">other</span><span style="color:#adb7c9;">) = </span><span style="color:#cd74e8;">delete</span><span style="color:#adb7c9;">;
+</span><span style="color:#adb7c9;">
+</span><span style="color:#adb7c9;">    </span><span style="font-style:italic;color:#5f697a;">// Explicit move.
+</span><span style="color:#adb7c9;">    </span><span style="color:#5cb3fa;">Joint</span><span style="color:#adb7c9;">(Joint&amp;&amp; </span><span style="color:#eb6772;">other</span><span style="color:#adb7c9;">);
+</span><span style="color:#adb7c9;">    Joint&amp; </span><span style="color:#5cb3fa;">operator=</span><span style="color:#adb7c9;">(Joint&amp;&amp; </span><span style="color:#eb6772;">other</span><span style="color:#adb7c9;">);
+</span><span style="color:#adb7c9;">
+</span><span style="color:#adb7c9;">  </span><span style="color:#cd74e8;">private</span><span style="color:#adb7c9;">:
+</span><span style="color:#adb7c9;">    rust::Joint joint_ = </span><span style="color:#db9d63;">nullptr</span><span style="color:#adb7c9;">;
+</span><span style="color:#adb7c9;">}</span><span style="color:#abb2bf;">;
+</span><span style="color:#abb2bf;">
+</span><span style="color:#abb2bf;">}  </span><span style="font-style:italic;color:#5f697a;">// namespace robot_joint
+</span></code></pre>
+<p>other</p>
+<pre data-lang="C++" style="background-color:#2b303b;color:#6c7079;" class="language-C++ "><code class="language-C++" data-lang="C++"><span style="color:#cd74e8;">#include </span><span style="color:#9acc76;">&quot;robot_joint.hpp&quot;
+</span><span style="color:#abb2bf;">
+</span><span style="color:#cd74e8;">extern </span><span style="color:#9acc76;">&quot;C&quot; </span><span style="color:#abb2bf;">{
+</span><span style="color:#cd74e8;">extern</span><span style="color:#abb2bf;"> robot_joint::rust::Joint</span><span style="color:#adb7c9;">* </span><span style="color:#5cb3fa;">robot_joint_new</span><span style="color:#abb2bf;">();
+</span><span style="color:#cd74e8;">extern void </span><span style="color:#5cb3fa;">robot_joint_free</span><span style="color:#abb2bf;">(robot_joint::rust::Joint</span><span style="color:#adb7c9;">*</span><span style="color:#abb2bf;">);
+</span><span style="color:#abb2bf;">}
+</span><span style="color:#abb2bf;">
+</span><span style="color:#cd74e8;">namespace </span><span style="color:#abb2bf;">robot_joint {
+</span><span style="color:#abb2bf;">
+</span><span style="color:#abb2bf;">Joint::</span><span style="color:#5cb3fa;">Joint</span><span style="color:#abb2bf;">() </span><span style="color:#adb7c9;">: </span><span style="color:#eb6772;">joint_</span><span style="color:#abb2bf;">(</span><span style="color:#eb6772;">robot_joint_new</span><span style="color:#abb2bf;">()) {}
+</span><span style="color:#abb2bf;">
+</span><span style="color:#abb2bf;">Joint::</span><span style="color:#5cb3fa;">Joint</span><span style="color:#abb2bf;">(Joint</span><span style="color:#adb7c9;">&amp;&amp; </span><span style="color:#eb6772;">other</span><span style="color:#abb2bf;">) </span><span style="color:#adb7c9;">: </span><span style="color:#eb6772;">joint_</span><span style="color:#abb2bf;">(other.</span><span style="color:#eb6772;">joint_</span><span style="color:#abb2bf;">) {
+</span><span style="color:#abb2bf;">  other.</span><span style="color:#eb6772;">joint_ </span><span style="color:#adb7c9;">= </span><span style="color:#db9d63;">nullptr</span><span style="color:#abb2bf;">;
+</span><span style="color:#abb2bf;">}
+</span><span style="color:#abb2bf;">
+</span><span style="color:#abb2bf;">Joint</span><span style="color:#adb7c9;">&amp; </span><span style="color:#abb2bf;">Joint::</span><span style="color:#5cb3fa;">operator=</span><span style="color:#abb2bf;">(Joint</span><span style="color:#adb7c9;">&amp;&amp; </span><span style="color:#eb6772;">other</span><span style="color:#abb2bf;">) {
+</span><span style="color:#abb2bf;">  joint_ </span><span style="color:#adb7c9;">=</span><span style="color:#abb2bf;"> other.</span><span style="color:#eb6772;">joint_</span><span style="color:#abb2bf;">;
+</span><span style="color:#abb2bf;">  other.</span><span style="color:#eb6772;">joint_ </span><span style="color:#adb7c9;">= </span><span style="color:#db9d63;">nullptr</span><span style="color:#abb2bf;">;
+</span><span style="color:#abb2bf;">  </span><span style="color:#cd74e8;">return </span><span style="color:#adb7c9;">*</span><span style="color:#eb6772;">this</span><span style="color:#abb2bf;">;
+</span><span style="color:#abb2bf;">}
+</span><span style="color:#abb2bf;">
+</span><span style="color:#abb2bf;">Joint::</span><span style="color:#5cb3fa;">~Joint</span><span style="color:#abb2bf;">() {
+</span><span style="color:#abb2bf;">  </span><span style="color:#cd74e8;">if </span><span style="color:#abb2bf;">(joint_ </span><span style="color:#adb7c9;">!= </span><span style="color:#db9d63;">nullptr</span><span style="color:#abb2bf;">) {
+</span><span style="color:#abb2bf;">    </span><span style="color:#eb6772;">robot_joint_free</span><span style="color:#abb2bf;">(joint_);
+</span><span style="color:#abb2bf;">  }
+</span><span style="color:#abb2bf;">}
+</span><span style="color:#abb2bf;">
+</span><span style="color:#abb2bf;">}  </span><span style="font-style:italic;color:#5f697a;">// namespace robot_joint
+</span></code></pre>
+<p>Lastly, and perhaps the hardest part we need to make this compatible with CMake projects.
+Here is a complete example with all the various moving parts from Kyle’s OptIk library:</p>
+<ul>
+<li><a href="https://github.com/kylc/optik/blob/ea584bfea4c702e52039d2cb09536a9513414121/crates/optik-cpp/CMakeLists.txt#L1">CMakeLists.txt</a></li>
+<li><a href="https://github.com/kylc/optik/blob/ea584bfea4c702e52039d2cb09536a9513414121/crates/optik-cpp/cmake/optikConfig.cmake.in#L1">cmake/optikConfig.cmake.in</a> - rename this file appropriately for your project</li>
+<li><a href="https://github.com/kylc/optik/blob/ea584bfea4c702e52039d2cb09536a9513414121/examples/CMakeLists.txt#L1">examples/CMakeLists.txt</a> - how to consume from downstream CMake project</li>
+</ul>
+<h2 id="first-class-library-types"><a class="zola-anchor" href="#first-class-library-types" aria-label="Anchor link for: first-class-library-types">🔗</a>First-class Library Types</h2>
+<p>Remember I said I took the manual approach because I wanted an interface with Eigen types on the C++ side.
+Here is a simple example of how to accomplish that.
+Presume we have this Rust function on our <code>Joint</code> type:</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#6c7079;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#cd74e8;">impl </span><span style="color:#abb2bf;">Joint {
+</span><span style="color:#abb2bf;">    </span><span style="color:#cd74e8;">pub fn </span><span style="color:#5cb3fa;">calculate_transform</span><span style="color:#abb2bf;">(</span><span style="color:#adb7c9;">&amp;</span><span style="color:#eb6772;">self</span><span style="color:#abb2bf;">, </span><span style="color:#eb6772;">variables</span><span style="color:#abb2bf;">: </span><span style="color:#adb7c9;">&amp;</span><span style="color:#abb2bf;">[</span><span style="color:#cd74e8;">f64</span><span style="color:#abb2bf;">]) -&gt; Isometry3&lt;</span><span style="color:#cd74e8;">f64</span><span style="color:#abb2bf;">&gt;;
+</span><span style="color:#abb2bf;">}
+</span></code></pre>
+<p>We want to create a C++ interface like this:</p>
+<pre data-lang="C++" style="background-color:#2b303b;color:#6c7079;" class="language-C++ "><code class="language-C++" data-lang="C++"><span style="color:#cd74e8;">class </span><span style="color:#f0c678;">Joint </span><span style="color:#adb7c9;">{
+</span><span style="color:#adb7c9;">  </span><span style="color:#cd74e8;">public</span><span style="color:#adb7c9;">:
+</span><span style="color:#adb7c9;">    Eigen::Isometry3d </span><span style="color:#5cb3fa;">calculate_transform</span><span style="color:#adb7c9;">(</span><span style="color:#cd74e8;">const</span><span style="color:#adb7c9;"> Eigen::VectorXd&amp; </span><span style="color:#eb6772;">variables</span><span style="color:#adb7c9;">);
+</span><span style="color:#adb7c9;">}</span><span style="color:#abb2bf;">;
+</span></code></pre>
+<p>First we must create the Rust FFI interface to this function:</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#6c7079;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#cd74e8;">use </span><span style="color:#abb2bf;">std::ffi::{</span><span style="color:#cd74e8;">c_double</span><span style="color:#abb2bf;">, </span><span style="color:#cd74e8;">c_uint</span><span style="color:#abb2bf;">};
+</span><span style="color:#abb2bf;">
+</span><span style="color:#abb2bf;">#[</span><span style="color:#eb6772;">repr</span><span style="color:#abb2bf;">(C)]
+</span><span style="color:#cd74e8;">struct </span><span style="color:#abb2bf;">RawVecDouble {
+</span><span style="color:#abb2bf;">    </span><span style="color:#eb6772;">ptr</span><span style="color:#abb2bf;">: </span><span style="color:#cd74e8;">*mut</span><span style="color:#abb2bf;"> c_double,
+</span><span style="color:#abb2bf;">    </span><span style="color:#eb6772;">length</span><span style="color:#abb2bf;">: </span><span style="color:#cd74e8;">usize</span><span style="color:#abb2bf;">,
+</span><span style="color:#abb2bf;">    </span><span style="color:#eb6772;">capacity</span><span style="color:#abb2bf;">: </span><span style="color:#cd74e8;">usize</span><span style="color:#abb2bf;">,
+</span><span style="color:#abb2bf;">}
+</span><span style="color:#abb2bf;">
+</span><span style="color:#abb2bf;">#[</span><span style="color:#eb6772;">no_mangle</span><span style="color:#abb2bf;">]
+</span><span style="color:#cd74e8;">extern </span><span style="color:#9acc76;">&quot;C&quot; </span><span style="color:#cd74e8;">fn </span><span style="color:#5cb3fa;">robot_joint_calculate_transform</span><span style="color:#abb2bf;">(
+</span><span style="color:#abb2bf;">    </span><span style="color:#eb6772;">joint</span><span style="color:#abb2bf;">: </span><span style="color:#cd74e8;">*const</span><span style="color:#abb2bf;"> Joint,
+</span><span style="color:#abb2bf;">    </span><span style="color:#eb6772;">variables</span><span style="color:#abb2bf;">: </span><span style="color:#cd74e8;">*const</span><span style="color:#abb2bf;"> c_double,
+</span><span style="color:#abb2bf;">    </span><span style="color:#eb6772;">size</span><span style="color:#abb2bf;">: c_uint,
+</span><span style="color:#abb2bf;">) -&gt; RawVecDouble {
+</span><span style="color:#abb2bf;">    </span><span style="color:#cd74e8;">unsafe </span><span style="color:#abb2bf;">{
+</span><span style="color:#abb2bf;">        </span><span style="color:#cd74e8;">let</span><span style="color:#abb2bf;"> joint </span><span style="color:#adb7c9;">=</span><span style="color:#abb2bf;"> joint.</span><span style="color:#5ebfcc;">as_ref</span><span style="color:#abb2bf;">().</span><span style="color:#5ebfcc;">expect</span><span style="color:#abb2bf;">(</span><span style="color:#9acc76;">&quot;Invalid pointer to Joint&quot;</span><span style="color:#abb2bf;">);
+</span><span style="color:#abb2bf;">        </span><span style="color:#cd74e8;">let</span><span style="color:#abb2bf;"> variables </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">std::slice::from_raw_parts(variables, size </span><span style="color:#adb7c9;">as </span><span style="color:#cd74e8;">usize</span><span style="color:#abb2bf;">);
+</span><span style="color:#abb2bf;">        </span><span style="color:#cd74e8;">let</span><span style="color:#abb2bf;"> transform </span><span style="color:#adb7c9;">=</span><span style="color:#abb2bf;"> joint.</span><span style="color:#5ebfcc;">calculate_transform</span><span style="color:#abb2bf;">(variables);
+</span><span style="color:#abb2bf;">        </span><span style="color:#cd74e8;">let</span><span style="color:#abb2bf;"> transform </span><span style="color:#adb7c9;">=</span><span style="color:#abb2bf;"> transform.</span><span style="color:#5ebfcc;">to_matrix</span><span style="color:#abb2bf;">().data.</span><span style="color:#5ebfcc;">as_slice</span><span style="color:#abb2bf;">().</span><span style="color:#5ebfcc;">to_vec</span><span style="color:#abb2bf;">();
+</span><span style="color:#abb2bf;">        </span><span style="color:#cd74e8;">let</span><span style="color:#abb2bf;"> length </span><span style="color:#adb7c9;">=</span><span style="color:#abb2bf;"> transform.</span><span style="color:#5ebfcc;">len</span><span style="color:#abb2bf;">();
+</span><span style="color:#abb2bf;">        </span><span style="color:#cd74e8;">let</span><span style="color:#abb2bf;"> capacity </span><span style="color:#adb7c9;">=</span><span style="color:#abb2bf;"> transform.</span><span style="color:#5ebfcc;">capacity</span><span style="color:#abb2bf;">();
+</span><span style="color:#abb2bf;">        RawVecDouble {
+</span><span style="color:#abb2bf;">            ptr: transform.</span><span style="color:#5ebfcc;">leak</span><span style="color:#abb2bf;">().</span><span style="color:#5ebfcc;">as_mut_ptr</span><span style="color:#abb2bf;">(),
+</span><span style="color:#abb2bf;">            length,
+</span><span style="color:#abb2bf;">            capacity,
+</span><span style="color:#abb2bf;">        }
+</span><span style="color:#abb2bf;">    }
+</span><span style="color:#abb2bf;">}
+</span><span style="color:#abb2bf;">
+</span><span style="color:#abb2bf;">#[</span><span style="color:#eb6772;">no_mangle</span><span style="color:#abb2bf;">]
+</span><span style="color:#cd74e8;">extern </span><span style="color:#9acc76;">&quot;C&quot; </span><span style="color:#cd74e8;">fn </span><span style="color:#5cb3fa;">vector_free</span><span style="color:#abb2bf;">(</span><span style="color:#eb6772;">vector</span><span style="color:#abb2bf;">: RawVecDouble) {
+</span><span style="color:#abb2bf;">    </span><span style="color:#cd74e8;">unsafe </span><span style="color:#abb2bf;">{
+</span><span style="color:#abb2bf;">        </span><span style="color:#5ebfcc;">drop</span><span style="color:#abb2bf;">(Vec::&lt;</span><span style="color:#cd74e8;">f64</span><span style="color:#abb2bf;">&gt;::from_raw_parts(
+</span><span style="color:#abb2bf;">            vector.ptr,
+</span><span style="color:#abb2bf;">            vector.length,
+</span><span style="color:#abb2bf;">            vector.capacity,
+</span><span style="color:#abb2bf;">        ));
+</span><span style="color:#abb2bf;">    }
+</span><span style="color:#abb2bf;">}
+</span></code></pre>
+<p>C types we need for parameters come from the <a href="https://doc.rust-lang.org/std/ffi/index.html">ffi module</a> in the Rust standard library.
+Before calling the rust <code>calculate_transform</code> we first need to construct the Rust types from the parameters.
+At the point of return we leak the memory as a mutable raw pointer.</p>
+<p>Then we can write a C++ function that calls the C functions:</p>
+<pre data-lang="C++" style="background-color:#2b303b;color:#6c7079;" class="language-C++ "><code class="language-C++" data-lang="C++"><span style="color:#cd74e8;">extern </span><span style="color:#9acc76;">&quot;C&quot; </span><span style="color:#abb2bf;">{
+</span><span style="color:#cd74e8;">struct </span><span style="color:#abb2bf;">RawVecDouble {
+</span><span style="color:#abb2bf;">    </span><span style="color:#cd74e8;">double</span><span style="color:#adb7c9;">*</span><span style="color:#abb2bf;"> ptr;
+</span><span style="color:#abb2bf;">    size_t length;
+</span><span style="color:#abb2bf;">    size_t capacity;
+</span><span style="color:#abb2bf;">};
+</span><span style="color:#abb2bf;">
+</span><span style="color:#cd74e8;">extern const double</span><span style="color:#adb7c9;">* </span><span style="color:#5cb3fa;">robot_joint_calculate_transform</span><span style="color:#abb2bf;">(</span><span style="color:#cd74e8;">const</span><span style="color:#abb2bf;"> robot_joint::rust::Joint</span><span style="color:#adb7c9;">*</span><span style="color:#abb2bf;">, </span><span style="color:#cd74e8;">const double</span><span style="color:#adb7c9;">*</span><span style="color:#abb2bf;">, </span><span style="color:#cd74e8;">unsigned </span><span style="color:#eb6772;">int</span><span style="color:#abb2bf;">);
+</span><span style="color:#cd74e8;">extern void </span><span style="color:#5cb3fa;">vector_free</span><span style="color:#abb2bf;">(</span><span style="color:#cd74e8;">const</span><span style="color:#abb2bf;"> RawVecDouble</span><span style="color:#adb7c9;">*</span><span style="color:#abb2bf;">);
+</span><span style="color:#abb2bf;">}
+</span><span style="color:#abb2bf;">
+</span><span style="color:#cd74e8;">namespace </span><span style="color:#abb2bf;">robot_joint {
+</span><span style="color:#abb2bf;">Eigen::Isometry3d Joint::</span><span style="color:#5cb3fa;">calculate_transform</span><span style="color:#abb2bf;">(</span><span style="color:#cd74e8;">const</span><span style="color:#abb2bf;"> Eigen::VectorXd</span><span style="color:#adb7c9;">&amp; </span><span style="color:#eb6772;">variables</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">{
+</span><span style="color:#abb2bf;">    </span><span style="color:#cd74e8;">const auto</span><span style="color:#abb2bf;"> data </span><span style="color:#adb7c9;">= </span><span style="color:#eb6772;">robot_joint_calculate_transform</span><span style="color:#abb2bf;">(joint_, variables.</span><span style="color:#eb6772;">data</span><span style="color:#abb2bf;">(), variables.</span><span style="color:#eb6772;">size</span><span style="color:#abb2bf;">());
+</span><span style="color:#abb2bf;">    Eigen::Isometry3d t;
+</span><span style="color:#abb2bf;">    t.</span><span style="color:#eb6772;">matrix</span><span style="color:#abb2bf;">() </span><span style="color:#adb7c9;">= </span><span style="color:#abb2bf;">Eigen::</span><span style="color:#eb6772;">Map</span><span style="color:#abb2bf;">&lt;Eigen::Matrix4d&gt;(data.</span><span style="color:#eb6772;">ptr</span><span style="color:#abb2bf;">);
+</span><span style="color:#abb2bf;">    </span><span style="color:#eb6772;">vector_free</span><span style="color:#abb2bf;">(data);
+</span><span style="color:#abb2bf;">    </span><span style="color:#cd74e8;">return</span><span style="color:#abb2bf;"> t;
+</span><span style="color:#abb2bf;">}
+</span><span style="color:#abb2bf;">}  </span><span style="font-style:italic;color:#5f697a;">// namespace robot_joint
+</span></code></pre>
+<p>This approach involves several type conversions.
+I first convert the Rust <code>Isometry3</code> type into a rust <code>Vec</code> then I store the details of the vector in a struct <code>RawVecDouble</code> and return that through my C interface.
+The C++ code receives this pointer and constructs an Eigen type by copying data pointed to.
+This is possible because both the Rust <code>Isometry3</code> and C++ <code>Isometry3d</code> types are backed by a column major 4x4 matrix of doubles.
+Lastly, I call a rust function to free the vector.</p>
+<h2 id="conclusion"><a class="zola-anchor" href="#conclusion" aria-label="Anchor link for: conclusion">🔗</a>Conclusion</h2>
+<p>You will likely have more trouble convincing your C++ loving coworkers to let you write code in Rust than doing the interop.
+Building a bridge that creates both nice C++ and Rust interfaces is not as hard as many think.</p>
+<h2 id="future-work"><a class="zola-anchor" href="#future-work" aria-label="Anchor link for: future-work">🔗</a>Future Work</h2>
+<p>Code without tests should be considered broken.
+To trust all this unsafe C++ and Rust code we should write tests that exercise all the code paths and run them with sanitizers.</p>
+<h2 id="references"><a class="zola-anchor" href="#references" aria-label="Anchor link for: references">🔗</a>References</h2>
+<ul>
+<li><a href="https://doc.rust-lang.org/nomicon/">The Rustnomicon</a> – The dark arts of unsafe Rust</li>
+<li><a href="https://github.com/kylc/optik">kylec/optick</a> – Rust IK solver with C++ and Rust bindings</li>
+</ul>
+
+  </main>
+  <p class="tags">
+        Tags:
+          <a href="https://rootware.github.io/rootware_zola/tags/talks/">#Talks</a>
+  </p>
+<footer>
+    © 2023 Shah Saad Alam<br>
+    <div class="social-links">
+        <a href="https://github.com/rootware" target="_blank" rel="noopener noreferrer" title="GitHub" class="social-icon"><i data-feather="github"></i></a>
+        <a href="https://scholar.google.com/citations?user=dpsqpvYAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" title="Google Scholar" class="social-icon"><i data-feather="rss"></i></a>
+    </div> 
+</footer>
+<script>
+    feather.replace();
+    const themeToggle = document.querySelector('.theme-toggle');
+    const currentTheme = localStorage.getItem('theme');
+
+    // Set the initial theme based on user preference or localStorage
+    if (currentTheme) {
+        document.body.setAttribute('data-theme', currentTheme);
+        if (currentTheme === 'dark') {
+            themeToggle.innerHTML = '<i data-feather="sun"></i>';
+            feather.replace();
+        }
+    }
+
+    themeToggle.addEventListener('click', function() {
+        let theme = 'light';
+
+        // Add the transition class
+        document.body.classList.add('theme-transition');
+
+        if (document.body.getAttribute('data-theme') !== 'dark') {
+            theme = 'dark';
+            themeToggle.innerHTML = '<i data-feather="sun"></i>';
+        } else {
+            themeToggle.innerHTML = '<i data-feather="moon"></i>';
+        }
+        feather.replace();
+        document.body.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+
+        // Remove the transition class after 0.5s
+        setTimeout(() => {
+            document.body.classList.remove('theme-transition');
+        }, 500);
+    });
+</script>
+</html>

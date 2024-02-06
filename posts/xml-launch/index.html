@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROSCON 2023 - Retro ROS 2 Launch | </title>
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
+    <meta name="title" content="ROSCON 2023 - Retro ROS 2 Launch">
+<meta property="og:site_name" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ROSCON 2023 - Retro ROS 2 Launch">
+<meta property="og:description" content="XML vs Python">
+<meta property="og:url" content="https://rootware.github.io/rootware_zola/https://rootware.github.io/rootware_zola/posts/xml-launch/">
+
+<meta property="article:published_time" content="2023-09-04">
+    <meta property="article:modified_time" content="2023-09-04">
+
+    <meta property="article:tag" content="Talks">
+        <meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ROSCON 2023 - Retro ROS 2 Launch">
+<meta name="twitter:description" content="XML vs Python">
+<meta name="twitter:url" content="https://rootware.github.io/rootware_zola/https://rootware.github.io/rootware_zola/posts/xml-launch/">
+
+<meta name="twitter:site" content="@mrkaran_">
+
+<meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Tyler Weaver">
+
+    <meta name="twitter:label2" content="Filed under">
+        <meta name="twitter:data2" content="Talks">
+    <meta name="twitter:creator" content="@mrkaran_">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=IBM+Plex+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://rootware.github.io/rootware_zola/styles/main.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.1/feather.min.js" integrity="sha512-4lykFR6C2W55I60sYddEGjieC2fU79R7GUtaqr3DzmNbo0vSaO1MfUjMoTFYYuedjfEix6uV9jVTtRCSBU/Xiw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script defer data-domain="mrkaran.dev" src="https://pls.mrkaran.dev/js/script.js"></script>
+</head>
+<body>
+<header>
+    <a href="https://rootware.github.io/rootware_zola/" class="title">
+        <h2 class="name"></h2>
+    </a>
+    <nav>
+        <div class="nav-items">
+            <a href="https://rootware.github.io/rootware_zola/">Home</a>
+            <a href="https://rootware.github.io/rootware_zola/posts/">Posts</a>
+            <a href="https://rootware.github.io/rootware_zola/talks.md">CV and Resume</a>
+            <a href="https://rootware.github.io/rootware_zola/contact/">Contact</a></div>
+        <button class="theme-toggle" title="Toggle Dark Mode">
+            <i data-feather="moon"></i>
+        </button>
+    </nav>
+</header>
+
+    <h1>ROSCON 2023 - Retro ROS 2 Launch</h1>
+    <div class="meta">
+      <div class="post-date">
+              <i>
+                  <time datetime='2023-09-04T00:00:00+00:00' pubdate>04 Sep, 2023</time>
+              </i>
+      </div>
+      <div class="reading-time">
+          
+          
+          <i>9 minutes (2135 words)</i>
+      </div>
+  </div>
+  <main>
+    <ul>
+<li><a href="/pdf/xml_launch.pdf">PDF of Slides</a></li>
+<li><a href="https://github.com/tylerjw/tylerjw.dev/tree/main/content/posts/xml_launch/easy_launch_demo">Demo code for launching moveit</a></li>
+</ul>
+<h1 id="launching-moveit-using-xml"><a class="zola-anchor" href="#launching-moveit-using-xml" aria-label="Anchor link for: launching-moveit-using-xml">🔗</a>Launching MoveIt using XML</h1>
+<p>As you may know MoveIt’s launch files and config are crazy complex.
+For this talk I converted MoveIt’s launch from hundreds of lines of Python to less than 50 lines of xml.
+I also took the dozen or so config files and reduced them to just these:</p>
+<ul>
+<li><code>moveit.yaml</code> &lt;- all the moveit config parameters</li>
+<li><code>ros2_control.yaml</code> &lt;- config for ros2_control</li>
+<li><code>urdf</code> &lt;- robot description</li>
+<li><code>srdf</code> &lt;- semantic robot description</li>
+</ul>
+<h4 id="use-the-types"><a class="zola-anchor" href="#use-the-types" aria-label="Anchor link for: use-the-types">🔗</a>Use the types</h4>
+<p>Due to an issue with how parameter value strings are parsed in the xml launch system the SRDF didn’t parse at first.
+I had an ugly work-around that involved modifying the xml files, but <a href="https://github.com/gavanderhoorn">G.A. vd. Hoorn</a> came to my rescue and <a href="https://github.com/ros2/launch/issues/729#issuecomment-1743445571">posted this in github</a>.</p>
+<p>The trick to string parameters is to put a <code>type=&quot;str&quot;</code> attribute in the string parameters and they work.</p>
+<h2 id="references"><a class="zola-anchor" href="#references" aria-label="Anchor link for: references">🔗</a>References:</h2>
+<ul>
+<li><a href="https://docs.ros.org/en/rolling/How-To-Guides/Migrating-from-ROS1/Migrating-Launch-Files.html">ROS 2 XML Launch Docs</a></li>
+<li><a href="https://docs.ros.org/en/rolling/How-To-Guides/Launch-file-different-formats.html">Comparing Python/XML/YAML</a></li>
+</ul>
+<h2 id="the-launch-file"><a class="zola-anchor" href="#the-launch-file" aria-label="Anchor link for: the-launch-file">🔗</a>The launch file</h2>
+<pre data-lang="xml" style="background-color:#2b303b;color:#6c7079;" class="language-xml "><code class="language-xml" data-lang="xml"><span style="color:#abb2bf;">&lt;</span><span style="color:#eb6772;">launch</span><span style="color:#abb2bf;">&gt;
+</span><span style="color:#abb2bf;">  &lt;</span><span style="color:#eb6772;">arg </span><span style="color:#db9d63;">name</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;robot_ip&quot; </span><span style="color:#db9d63;">default</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;xxx.yyy.zzz.www&quot; </span><span style="color:#abb2bf;">/&gt;
+</span><span style="color:#abb2bf;">  &lt;</span><span style="color:#eb6772;">arg </span><span style="color:#db9d63;">name</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;use_fake_hardware&quot; </span><span style="color:#db9d63;">default</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;true&quot; </span><span style="color:#abb2bf;">/&gt;
+</span><span style="color:#abb2bf;">  &lt;</span><span style="color:#eb6772;">arg </span><span style="color:#db9d63;">name</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;gripper&quot; </span><span style="color:#db9d63;">default</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;robotiq_2f_85&quot; </span><span style="color:#abb2bf;">/&gt;
+</span><span style="color:#abb2bf;">  &lt;</span><span style="color:#eb6772;">arg </span><span style="color:#db9d63;">name</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;dof&quot; </span><span style="color:#db9d63;">default</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;7&quot; </span><span style="color:#abb2bf;">/&gt;
+</span><span style="color:#abb2bf;">
+</span><span style="color:#abb2bf;">  &lt;</span><span style="color:#eb6772;">let </span><span style="color:#db9d63;">name</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;robot_description&quot; </span><span style="color:#db9d63;">value</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;$(command &#39;xacro $(find-pkg-share kortex_description)/robots/gen3.xacro robot_ip:=$(var robot_ip) use_fake_hardware:=$(var use_fake_hardware) gripper:=$(var gripper) dof:=$(var dof)&#39;)&quot; </span><span style="color:#abb2bf;">/&gt;
+</span><span style="color:#abb2bf;">  &lt;</span><span style="color:#eb6772;">let </span><span style="color:#db9d63;">name</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;robot_description_semantic&quot; </span><span style="color:#db9d63;">value</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;$(command &#39;xacro $(find-pkg-share kinova_gen3_7dof_robotiq_2f_85_moveit_config)/config/gen3.srdf&#39;)&quot; </span><span style="color:#abb2bf;">/&gt;
+</span><span style="color:#abb2bf;">
+</span><span style="color:#abb2bf;">  </span><span style="font-style:italic;color:#5f697a;">&lt;!-- MoveGroup --&gt;
+</span><span style="color:#abb2bf;">  &lt;</span><span style="color:#eb6772;">node </span><span style="color:#db9d63;">pkg</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;moveit_ros_move_group&quot; </span><span style="color:#db9d63;">exec</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;move_group&quot; </span><span style="color:#db9d63;">output</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;screen&quot;</span><span style="color:#abb2bf;">&gt;
+</span><span style="color:#abb2bf;">    &lt;</span><span style="color:#eb6772;">param </span><span style="color:#db9d63;">name</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;robot_description&quot; </span><span style="color:#db9d63;">value</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;$(var robot_description)&quot; </span><span style="color:#db9d63;">type</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;str&quot; </span><span style="color:#abb2bf;">/&gt;
+</span><span style="color:#abb2bf;">    &lt;</span><span style="color:#eb6772;">param </span><span style="color:#db9d63;">name</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;robot_description_semantic&quot; </span><span style="color:#db9d63;">value</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;$(var robot_description_semantic)&quot; </span><span style="color:#db9d63;">type</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;str&quot; </span><span style="color:#abb2bf;">/&gt;
+</span><span style="color:#abb2bf;">    &lt;</span><span style="color:#eb6772;">param </span><span style="color:#db9d63;">from</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;$(find-pkg-share easy_launch_demo)/config/moveit.yaml&quot; </span><span style="color:#abb2bf;">/&gt;
+</span><span style="color:#abb2bf;">  &lt;/</span><span style="color:#eb6772;">node</span><span style="color:#abb2bf;">&gt;
+</span><span style="color:#abb2bf;">
+</span><span style="color:#abb2bf;">  </span><span style="font-style:italic;color:#5f697a;">&lt;!-- RViz --&gt;
+</span><span style="color:#abb2bf;">  &lt;</span><span style="color:#eb6772;">node </span><span style="color:#db9d63;">pkg</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;rviz2&quot; </span><span style="color:#db9d63;">exec</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;rviz2&quot; </span><span style="color:#db9d63;">name</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;rviz2&quot; </span><span style="color:#db9d63;">output</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;log&quot; </span><span style="color:#db9d63;">args</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;-d $(find-pkg-share moveit2_tutorials)/launch/kinova_moveit_config_demo.rviz&quot;</span><span style="color:#abb2bf;">&gt;
+</span><span style="color:#abb2bf;">    &lt;</span><span style="color:#eb6772;">param </span><span style="color:#db9d63;">name</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;robot_description&quot; </span><span style="color:#db9d63;">value</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;$(var robot_description)&quot; </span><span style="color:#db9d63;">type</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;str&quot; </span><span style="color:#abb2bf;">/&gt;
+</span><span style="color:#abb2bf;">    &lt;</span><span style="color:#eb6772;">param </span><span style="color:#db9d63;">name</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;robot_description_semantic&quot; </span><span style="color:#db9d63;">value</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;$(var robot_description_semantic)&quot; </span><span style="color:#db9d63;">type</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;str&quot; </span><span style="color:#abb2bf;">/&gt;
+</span><span style="color:#abb2bf;">    &lt;</span><span style="color:#eb6772;">param </span><span style="color:#db9d63;">from</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;$(find-pkg-share easy_launch_demo)/config/moveit.yaml&quot; </span><span style="color:#abb2bf;">/&gt;
+</span><span style="color:#abb2bf;">  &lt;/</span><span style="color:#eb6772;">node</span><span style="color:#abb2bf;">&gt;
+</span><span style="color:#abb2bf;">
+</span><span style="color:#abb2bf;">  </span><span style="font-style:italic;color:#5f697a;">&lt;!-- Static TF --&gt;
+</span><span style="color:#abb2bf;">  &lt;</span><span style="color:#eb6772;">node </span><span style="color:#db9d63;">pkg</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;tf2_ros&quot; </span><span style="color:#db9d63;">exec</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;static_transform_publisher&quot; </span><span style="color:#db9d63;">name</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;static_transform_publisher&quot; </span><span style="color:#db9d63;">output</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;log&quot;
+</span><span style="color:#abb2bf;">    </span><span style="color:#db9d63;">args</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;--frame-id world --child-frame-id base_link&quot; </span><span style="color:#abb2bf;">/&gt;
+</span><span style="color:#abb2bf;">
+</span><span style="color:#abb2bf;">  </span><span style="font-style:italic;color:#5f697a;">&lt;!-- Publish TF --&gt;
+</span><span style="color:#abb2bf;">  &lt;</span><span style="color:#eb6772;">node </span><span style="color:#db9d63;">pkg</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;robot_state_publisher&quot; </span><span style="color:#db9d63;">exec</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;robot_state_publisher&quot; </span><span style="color:#db9d63;">name</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;robot_state_publisher&quot; </span><span style="color:#db9d63;">output</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;both&quot; </span><span style="color:#abb2bf;">&gt;
+</span><span style="color:#abb2bf;">    &lt;</span><span style="color:#eb6772;">param </span><span style="color:#db9d63;">name</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;robot_description&quot; </span><span style="color:#db9d63;">value</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;$(var robot_description)&quot; </span><span style="color:#db9d63;">type</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;str&quot; </span><span style="color:#abb2bf;">/&gt;
+</span><span style="color:#abb2bf;">  &lt;/</span><span style="color:#eb6772;">node</span><span style="color:#abb2bf;">&gt;
+</span><span style="color:#abb2bf;">
+</span><span style="color:#abb2bf;">  </span><span style="font-style:italic;color:#5f697a;">&lt;!-- ros2_control --&gt;
+</span><span style="color:#abb2bf;">  &lt;</span><span style="color:#eb6772;">node </span><span style="color:#db9d63;">pkg</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;controller_manager&quot; </span><span style="color:#db9d63;">exec</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;ros2_control_node&quot; </span><span style="color:#db9d63;">output</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;both&quot; </span><span style="color:#abb2bf;">&gt;
+</span><span style="color:#abb2bf;">    &lt;</span><span style="color:#eb6772;">param </span><span style="color:#db9d63;">name</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;robot_description&quot; </span><span style="color:#db9d63;">value</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;$(var robot_description)&quot; </span><span style="color:#db9d63;">type</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;str&quot; </span><span style="color:#abb2bf;">/&gt;
+</span><span style="color:#abb2bf;">    &lt;</span><span style="color:#eb6772;">param </span><span style="color:#db9d63;">from</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;$(find-pkg-share kinova_gen3_7dof_robotiq_2f_85_moveit_config)/config/ros2_controllers.yaml&quot; </span><span style="color:#abb2bf;">/&gt;
+</span><span style="color:#abb2bf;">  &lt;/</span><span style="color:#eb6772;">node</span><span style="color:#abb2bf;">&gt;
+</span><span style="color:#abb2bf;">
+</span><span style="color:#abb2bf;">  </span><span style="font-style:italic;color:#5f697a;">&lt;!-- ros2_control spawners --&gt;
+</span><span style="color:#abb2bf;">  &lt;</span><span style="color:#eb6772;">node </span><span style="color:#db9d63;">pkg</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;controller_manager&quot; </span><span style="color:#db9d63;">exec</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;spawner&quot; </span><span style="color:#db9d63;">args</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;joint_state_broadcaster -c /controller_manager&quot; </span><span style="color:#abb2bf;">/&gt;
+</span><span style="color:#abb2bf;">  &lt;</span><span style="color:#eb6772;">node </span><span style="color:#db9d63;">pkg</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;controller_manager&quot; </span><span style="color:#db9d63;">exec</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;spawner&quot; </span><span style="color:#db9d63;">args</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;joint_trajectory_controller -c /controller_manager&quot; </span><span style="color:#abb2bf;">/&gt;
+</span><span style="color:#abb2bf;">  &lt;</span><span style="color:#eb6772;">node </span><span style="color:#db9d63;">pkg</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;controller_manager&quot; </span><span style="color:#db9d63;">exec</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;spawner&quot; </span><span style="color:#db9d63;">args</span><span style="color:#abb2bf;">=</span><span style="color:#9acc76;">&quot;robotiq_gripper_controller -c /controller_manager&quot; </span><span style="color:#abb2bf;">/&gt;
+</span><span style="color:#abb2bf;">&lt;/</span><span style="color:#eb6772;">launch</span><span style="color:#abb2bf;">&gt;
+</span></code></pre>
+<h2 id="the-moveit-config"><a class="zola-anchor" href="#the-moveit-config" aria-label="Anchor link for: the-moveit-config">🔗</a>The MoveIt Config</h2>
+<pre data-lang="yaml" style="background-color:#2b303b;color:#6c7079;" class="language-yaml "><code class="language-yaml" data-lang="yaml"><span style="color:#eb6772;">/**</span><span style="color:#abb2bf;">:
+</span><span style="color:#abb2bf;">  </span><span style="color:#eb6772;">ros__parameters</span><span style="color:#abb2bf;">:
+</span><span style="color:#abb2bf;">    </span><span style="color:#eb6772;">default_planning_pipeline</span><span style="color:#abb2bf;">: </span><span style="color:#9acc76;">ompl
+</span><span style="color:#abb2bf;">    </span><span style="color:#eb6772;">planning_pipelines</span><span style="color:#abb2bf;">:
+</span><span style="color:#abb2bf;">      - </span><span style="color:#9acc76;">ompl
+</span><span style="color:#abb2bf;">      - </span><span style="color:#9acc76;">stomp
+</span><span style="color:#abb2bf;">      - </span><span style="color:#9acc76;">pilz_industrial_motion_planner
+</span><span style="color:#abb2bf;">    </span><span style="color:#eb6772;">ompl</span><span style="color:#abb2bf;">:
+</span><span style="color:#abb2bf;">      </span><span style="color:#eb6772;">planning_plugin</span><span style="color:#abb2bf;">: </span><span style="color:#9acc76;">ompl_interface/OMPLPlanner
+</span><span style="color:#abb2bf;">      </span><span style="color:#eb6772;">start_state_max_bounds_error</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">0.1
+</span><span style="color:#abb2bf;">      </span><span style="color:#eb6772;">jiggle_fraction</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">0.05
+</span><span style="color:#abb2bf;">      </span><span style="color:#eb6772;">request_adapters</span><span style="color:#abb2bf;">: </span><span style="color:#cd74e8;">&gt;-
+</span><span style="color:#9acc76;">          default_planner_request_adapters/AddTimeOptimalParameterization
+</span><span style="color:#9acc76;">          default_planner_request_adapters/ResolveConstraintFrames
+</span><span style="color:#9acc76;">          default_planner_request_adapters/FixWorkspaceBounds
+</span><span style="color:#9acc76;">          default_planner_request_adapters/FixStartStateBounds
+</span><span style="color:#9acc76;">          default_planner_request_adapters/FixStartStateCollision
+</span><span style="color:#9acc76;">          default_planner_request_adapters/FixStartStatePathConstraints
+</span><span style="color:#abb2bf;">    </span><span style="color:#eb6772;">stomp</span><span style="color:#abb2bf;">:
+</span><span style="color:#abb2bf;">      </span><span style="color:#eb6772;">planning_plugin</span><span style="color:#abb2bf;">: </span><span style="color:#9acc76;">stomp_moveit/StompPlanner
+</span><span style="color:#abb2bf;">      </span><span style="color:#eb6772;">request_adapters</span><span style="color:#abb2bf;">: </span><span style="color:#cd74e8;">&gt;-
+</span><span style="color:#9acc76;">        default_planner_request_adapters/AddTimeOptimalParameterization
+</span><span style="color:#9acc76;">        default_planner_request_adapters/ResolveConstraintFrames
+</span><span style="color:#9acc76;">        default_planner_request_adapters/FixWorkspaceBounds
+</span><span style="color:#9acc76;">        default_planner_request_adapters/FixStartStateBounds
+</span><span style="color:#9acc76;">        default_planner_request_adapters/FixStartStateCollision
+</span><span style="color:#9acc76;">        default_planner_request_adapters/FixStartStatePathConstraints
+</span><span style="color:#abb2bf;">      </span><span style="color:#eb6772;">stomp_moveit</span><span style="color:#abb2bf;">:
+</span><span style="color:#abb2bf;">        </span><span style="color:#eb6772;">num_timesteps</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">60
+</span><span style="color:#abb2bf;">        </span><span style="color:#eb6772;">num_iterations</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">40
+</span><span style="color:#abb2bf;">        </span><span style="color:#eb6772;">num_iterations_after_valid</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">0
+</span><span style="color:#abb2bf;">        </span><span style="color:#eb6772;">num_rollouts</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">30
+</span><span style="color:#abb2bf;">        </span><span style="color:#eb6772;">max_rollouts</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">30
+</span><span style="color:#abb2bf;">        </span><span style="color:#eb6772;">exponentiated_cost_sensitivity</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">0.8
+</span><span style="color:#abb2bf;">        </span><span style="color:#eb6772;">control_cost_weight</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">0.1
+</span><span style="color:#abb2bf;">        </span><span style="color:#eb6772;">delta_t</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">0.1
+</span><span style="color:#abb2bf;">    </span><span style="color:#eb6772;">pilz_industrial_motion_planner</span><span style="color:#abb2bf;">:
+</span><span style="color:#abb2bf;">      </span><span style="color:#eb6772;">planning_plugin</span><span style="color:#abb2bf;">: </span><span style="color:#9acc76;">pilz_industrial_motion_planner/CommandPlanner
+</span><span style="color:#abb2bf;">      </span><span style="color:#eb6772;">request_adapters</span><span style="color:#abb2bf;">: </span><span style="color:#9acc76;">&quot;&quot;
+</span><span style="color:#abb2bf;">      </span><span style="color:#eb6772;">default_planner_config</span><span style="color:#abb2bf;">: </span><span style="color:#9acc76;">PTP
+</span><span style="color:#abb2bf;">      </span><span style="color:#eb6772;">capabilities</span><span style="color:#abb2bf;">: </span><span style="color:#cd74e8;">&gt;-
+</span><span style="color:#9acc76;">          pilz_industrial_motion_planner/MoveGroupSequenceAction
+</span><span style="color:#9acc76;">          pilz_industrial_motion_planner/MoveGroupSequenceService
+</span><span style="color:#abb2bf;">    </span><span style="color:#eb6772;">robot_description_kinematics</span><span style="color:#abb2bf;">:
+</span><span style="color:#abb2bf;">      </span><span style="color:#eb6772;">manipulator</span><span style="color:#abb2bf;">:
+</span><span style="color:#abb2bf;">        </span><span style="color:#eb6772;">kinematics_solver</span><span style="color:#abb2bf;">: </span><span style="color:#9acc76;">&quot;kdl_kinematics_plugin/KDLKinematicsPlugin&quot;
+</span><span style="color:#abb2bf;">        </span><span style="color:#eb6772;">kinematics_solver_search_resolution</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">0.005
+</span><span style="color:#abb2bf;">        </span><span style="color:#eb6772;">kinematics_solver_timeout</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">0.005
+</span><span style="color:#abb2bf;">    </span><span style="color:#eb6772;">robot_description_planning</span><span style="color:#abb2bf;">:
+</span><span style="color:#abb2bf;">      </span><span style="color:#eb6772;">cartesian_limits</span><span style="color:#abb2bf;">:
+</span><span style="color:#abb2bf;">        </span><span style="color:#eb6772;">max_trans_vel</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">1.0
+</span><span style="color:#abb2bf;">        </span><span style="color:#eb6772;">max_trans_acc</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">2.25
+</span><span style="color:#abb2bf;">        </span><span style="color:#eb6772;">max_trans_dec</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">-5.0
+</span><span style="color:#abb2bf;">        </span><span style="color:#eb6772;">max_rot_vel</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">1.57
+</span><span style="color:#abb2bf;">      </span><span style="color:#eb6772;">default_velocity_scaling_factor</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">0.1
+</span><span style="color:#abb2bf;">      </span><span style="color:#eb6772;">default_acceleration_scaling_factor</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">0.1
+</span><span style="color:#abb2bf;">      </span><span style="color:#eb6772;">joint_limits</span><span style="color:#abb2bf;">:
+</span><span style="color:#abb2bf;">        </span><span style="color:#eb6772;">joint_1</span><span style="color:#abb2bf;">:
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">has_velocity_limits</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">true
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">max_velocity</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">1.3963000000000001
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">has_acceleration_limits</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">true
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">max_acceleration</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">8.6
+</span><span style="color:#abb2bf;">        </span><span style="color:#eb6772;">joint_2</span><span style="color:#abb2bf;">:
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">has_velocity_limits</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">true
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">max_velocity</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">1.3963000000000001
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">has_acceleration_limits</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">true
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">max_acceleration</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">8.6
+</span><span style="color:#abb2bf;">        </span><span style="color:#eb6772;">joint_3</span><span style="color:#abb2bf;">:
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">has_velocity_limits</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">true
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">max_velocity</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">1.3963000000000001
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">has_acceleration_limits</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">true
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">max_acceleration</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">8.6
+</span><span style="color:#abb2bf;">        </span><span style="color:#eb6772;">joint_4</span><span style="color:#abb2bf;">:
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">has_velocity_limits</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">true
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">max_velocity</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">1.3963000000000001
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">has_acceleration_limits</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">true
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">max_acceleration</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">8.6
+</span><span style="color:#abb2bf;">        </span><span style="color:#eb6772;">joint_5</span><span style="color:#abb2bf;">:
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">has_velocity_limits</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">true
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">max_velocity</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">1.2218
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">has_acceleration_limits</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">true
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">max_acceleration</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">8.6
+</span><span style="color:#abb2bf;">        </span><span style="color:#eb6772;">joint_6</span><span style="color:#abb2bf;">:
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">has_velocity_limits</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">true
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">max_velocity</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">1.2218
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">has_acceleration_limits</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">true
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">max_acceleration</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">8.6
+</span><span style="color:#abb2bf;">        </span><span style="color:#eb6772;">joint_7</span><span style="color:#abb2bf;">:
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">has_velocity_limits</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">true
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">max_velocity</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">1.2218
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">has_acceleration_limits</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">true
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">max_acceleration</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">8.6
+</span><span style="color:#abb2bf;">        </span><span style="color:#eb6772;">robotiq_85_left_knuckle_joint</span><span style="color:#abb2bf;">:
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">has_velocity_limits</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">true
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">max_velocity</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">0.5
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">has_acceleration_limits</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">true
+</span><span style="color:#abb2bf;">          </span><span style="color:#eb6772;">max_acceleration</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">1.0
+</span><span style="color:#abb2bf;">    </span><span style="color:#eb6772;">moveit_controller_manager</span><span style="color:#abb2bf;">: </span><span style="color:#9acc76;">moveit_simple_controller_manager/MoveItSimpleControllerManager
+</span><span style="color:#abb2bf;">    </span><span style="color:#eb6772;">moveit_simple_controller_manager</span><span style="color:#abb2bf;">:
+</span><span style="color:#abb2bf;">      </span><span style="color:#eb6772;">controller_names</span><span style="color:#abb2bf;">:
+</span><span style="color:#abb2bf;">        - </span><span style="color:#9acc76;">joint_trajectory_controller
+</span><span style="color:#abb2bf;">        - </span><span style="color:#9acc76;">robotiq_gripper_controller
+</span><span style="color:#abb2bf;">      </span><span style="color:#eb6772;">joint_trajectory_controller</span><span style="color:#abb2bf;">:
+</span><span style="color:#abb2bf;">        </span><span style="color:#eb6772;">type</span><span style="color:#abb2bf;">: </span><span style="color:#9acc76;">FollowJointTrajectory
+</span><span style="color:#abb2bf;">        </span><span style="color:#eb6772;">joints</span><span style="color:#abb2bf;">:
+</span><span style="color:#abb2bf;">          - </span><span style="color:#9acc76;">joint_1
+</span><span style="color:#abb2bf;">          - </span><span style="color:#9acc76;">joint_2
+</span><span style="color:#abb2bf;">          - </span><span style="color:#9acc76;">joint_3
+</span><span style="color:#abb2bf;">          - </span><span style="color:#9acc76;">joint_4
+</span><span style="color:#abb2bf;">          - </span><span style="color:#9acc76;">joint_5
+</span><span style="color:#abb2bf;">          - </span><span style="color:#9acc76;">joint_6
+</span><span style="color:#abb2bf;">          - </span><span style="color:#9acc76;">joint_7
+</span><span style="color:#abb2bf;">        </span><span style="color:#eb6772;">action_ns</span><span style="color:#abb2bf;">: </span><span style="color:#9acc76;">follow_joint_trajectory
+</span><span style="color:#abb2bf;">        </span><span style="color:#eb6772;">default</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">true
+</span><span style="color:#abb2bf;">      </span><span style="color:#eb6772;">robotiq_gripper_controller</span><span style="color:#abb2bf;">:
+</span><span style="color:#abb2bf;">        </span><span style="color:#eb6772;">type</span><span style="color:#abb2bf;">: </span><span style="color:#9acc76;">GripperCommand
+</span><span style="color:#abb2bf;">        </span><span style="color:#eb6772;">joints</span><span style="color:#abb2bf;">:
+</span><span style="color:#abb2bf;">          - </span><span style="color:#9acc76;">robotiq_85_left_knuckle_joint
+</span><span style="color:#abb2bf;">        </span><span style="color:#eb6772;">action_ns</span><span style="color:#abb2bf;">: </span><span style="color:#9acc76;">gripper_cmd
+</span><span style="color:#abb2bf;">        </span><span style="color:#eb6772;">default</span><span style="color:#abb2bf;">: </span><span style="color:#db9d63;">true
+</span></code></pre>
+
+  </main>
+  <p class="tags">
+        Tags:
+          <a href="https://rootware.github.io/rootware_zola/tags/talks/">#Talks</a>
+  </p>
+<footer>
+    © 2023 Shah Saad Alam<br>
+    <div class="social-links">
+        <a href="https://github.com/rootware" target="_blank" rel="noopener noreferrer" title="GitHub" class="social-icon"><i data-feather="github"></i></a>
+        <a href="https://scholar.google.com/citations?user=dpsqpvYAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" title="Google Scholar" class="social-icon"><i data-feather="rss"></i></a>
+    </div> 
+</footer>
+<script>
+    feather.replace();
+    const themeToggle = document.querySelector('.theme-toggle');
+    const currentTheme = localStorage.getItem('theme');
+
+    // Set the initial theme based on user preference or localStorage
+    if (currentTheme) {
+        document.body.setAttribute('data-theme', currentTheme);
+        if (currentTheme === 'dark') {
+            themeToggle.innerHTML = '<i data-feather="sun"></i>';
+            feather.replace();
+        }
+    }
+
+    themeToggle.addEventListener('click', function() {
+        let theme = 'light';
+
+        // Add the transition class
+        document.body.classList.add('theme-transition');
+
+        if (document.body.getAttribute('data-theme') !== 'dark') {
+            theme = 'dark';
+            themeToggle.innerHTML = '<i data-feather="sun"></i>';
+        } else {
+            themeToggle.innerHTML = '<i data-feather="moon"></i>';
+        }
+        feather.replace();
+        document.body.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+
+        // Remove the transition class after 0.5s
+        setTimeout(() => {
+            document.body.classList.remove('theme-transition');
+        }, 500);
+    });
+</script>
+</html>

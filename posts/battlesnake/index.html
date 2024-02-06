@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code a Snake AI | </title>
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
+    <meta name="title" content="Code a Snake AI">
+<meta property="og:site_name" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Code a Snake AI">
+<meta property="og:description" content="Battlesnake">
+<meta property="og:url" content="https://rootware.github.io/rootware_zola/https://rootware.github.io/rootware_zola/posts/battlesnake/">
+
+<meta property="article:published_time" content="2023-12-04">
+    <meta property="article:modified_time" content="2023-12-04">
+
+    <meta property="article:tag" content="Talks">
+        <meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Code a Snake AI">
+<meta name="twitter:description" content="Battlesnake">
+<meta name="twitter:url" content="https://rootware.github.io/rootware_zola/https://rootware.github.io/rootware_zola/posts/battlesnake/">
+
+<meta name="twitter:site" content="@mrkaran_">
+
+<meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Tyler Weaver">
+
+    <meta name="twitter:label2" content="Filed under">
+        <meta name="twitter:data2" content="Talks">
+    <meta name="twitter:creator" content="@mrkaran_">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=IBM+Plex+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://rootware.github.io/rootware_zola/styles/main.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.1/feather.min.js" integrity="sha512-4lykFR6C2W55I60sYddEGjieC2fU79R7GUtaqr3DzmNbo0vSaO1MfUjMoTFYYuedjfEix6uV9jVTtRCSBU/Xiw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script defer data-domain="mrkaran.dev" src="https://pls.mrkaran.dev/js/script.js"></script>
+</head>
+<body>
+<header>
+    <a href="https://rootware.github.io/rootware_zola/" class="title">
+        <h2 class="name"></h2>
+    </a>
+    <nav>
+        <div class="nav-items">
+            <a href="https://rootware.github.io/rootware_zola/">Home</a>
+            <a href="https://rootware.github.io/rootware_zola/posts/">Posts</a>
+            <a href="https://rootware.github.io/rootware_zola/talks.md">CV and Resume</a>
+            <a href="https://rootware.github.io/rootware_zola/contact/">Contact</a></div>
+        <button class="theme-toggle" title="Toggle Dark Mode">
+            <i data-feather="moon"></i>
+        </button>
+    </nav>
+</header>
+
+    <h1>Code a Snake AI</h1>
+    <div class="meta">
+      <div class="post-date">
+              <i>
+                  <time datetime='2023-12-04T00:00:00+00:00' pubdate>04 Dec, 2023</time>
+              </i>
+      </div>
+      <div class="reading-time">
+          
+          
+          <i>8 minutes (1896 words)</i>
+      </div>
+  </div>
+  <main>
+    <p><a href="https://play.battlesnake.com/">Battlesnake</a> is a competitive multiplayer game where your code is the controller.
+To quote the docs:</p>
+<blockquote>
+<p>Each Battlesnake is controlled by a live web server and the code you write.</p>
+</blockquote>
+<p>To get everyone started fast, I’m going to quickly walk you through setting up your local environment for development and testing, writing the first bit of logic for your snake, and leaving you with the source for my snake to start.</p>
+<h2 id="testing"><a class="zola-anchor" href="#testing" aria-label="Anchor link for: testing">🔗</a>Testing</h2>
+<p>You’ll need a copy of the Battlesnake CLI to test the snake you write.
+It is a go program and is easy to download and install on your computer <a href="https://github.com/BattlesnakeOfficial/rules/tree/main/cli">following these instructions</a>.</p>
+<h2 id="hosting"><a class="zola-anchor" href="#hosting" aria-label="Anchor link for: hosting">🔗</a>Hosting</h2>
+<p>Here is <a href="https://docs.battlesnake.com/guides/tips/hosting-suggestions">the wiki on choosing a hosting solution</a>.
+For mine, I decided to use Digital Ocean as I have had a good experience hosting there.
+Jonathan used <a href="https://docs.battlesnake.com/quickstart">Replit</a> which also seems like it has a really good option.</p>
+<p>I used the DigitalOcean App Platrom with the least expensive option ($5/mo) for my snake, Lethal Lora.
+After pointing Digital Ocean at my GitHub repo, which has this Dockerfile in the root, it rebuilds and deploys whenever I push to the main branch.
+No CI config needed.</p>
+<pre data-lang="Dockerfile" style="background-color:#2b303b;color:#6c7079;" class="language-Dockerfile "><code class="language-Dockerfile" data-lang="Dockerfile"><span style="color:#cd74e8;">FROM</span><span style="color:#abb2bf;"> rust:1.71
+</span><span style="color:#abb2bf;">
+</span><span style="color:#cd74e8;">COPY</span><span style="color:#abb2bf;"> . /usr/app
+</span><span style="color:#cd74e8;">WORKDIR </span><span style="color:#abb2bf;">/usr/app
+</span><span style="color:#abb2bf;">
+</span><span style="color:#cd74e8;">RUN </span><span style="color:#abb2bf;">cargo install --path .
+</span><span style="color:#abb2bf;">
+</span><span style="color:#adb7c9;">CMD </span><span style="color:#abb2bf;">[</span><span style="color:#9acc76;">&quot;lethal-lora&quot;</span><span style="color:#abb2bf;">]
+</span></code></pre>
+<p>I’d suggest using either Replit or Digital Ocean if you don’t have any prior experience with hosting a webserver as they can let you quickly get started working on the logic of your snake.
+My Dockerfile above was copied from the <a href="https://github.com/BattlesnakeOfficial/starter-snake-rust">Rust battlesnake starter project</a> with one minor modification to update the version of Rust.</p>
+<h2 id="starter-projects"><a class="zola-anchor" href="#starter-projects" aria-label="Anchor link for: starter-projects">🔗</a>Starter Projects</h2>
+<p>There are <a href="https://docs.battlesnake.com/starter-projects#official-templates">official starter projects</a> for battlesnake for Python, Go, Rust, TypeScript, and JavaScript.
+There are also starter projects from the community for many other languages.
+These projects include many of the fiddly details of getting the webserver setup so you can jump right into programming your snake’s ai.</p>
+<h2 id="4-possible-moves"><a class="zola-anchor" href="#4-possible-moves" aria-label="Anchor link for: 4-possible-moves">🔗</a>4 Possible Moves</h2>
+<p>What your AI is trying to decide each turn is one of four possible moves: Up, Down, Left, or Right.
+These are in the global frame.
+The origin (0,0) is the lower left corner of the map.
++y is up, +x is right.</p>
+<p>For my Rust snake I defined an Enum for these 4 possible moves:</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#6c7079;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#abb2bf;">#[</span><span style="color:#eb6772;">derive</span><span style="color:#abb2bf;">(Debug, Eq, PartialEq)]
+</span><span style="color:#cd74e8;">enum </span><span style="color:#abb2bf;">Move {
+</span><span style="color:#abb2bf;">    Left,
+</span><span style="color:#abb2bf;">    Right,
+</span><span style="color:#abb2bf;">    Up,
+</span><span style="color:#abb2bf;">    Down,
+</span><span style="color:#abb2bf;">}
+</span></code></pre>
+<p>Then, using the <code>Coord</code> type from the example project I defined functions to convert from my <code>Move</code> enum and the <code>Coord</code> type.
+I also wrote a function to make a vector of all of the 4 moves.</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#6c7079;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#cd74e8;">impl </span><span style="color:#abb2bf;">Move {
+</span><span style="color:#abb2bf;">    </span><span style="color:#cd74e8;">fn </span><span style="color:#5cb3fa;">to_coord</span><span style="color:#abb2bf;">(</span><span style="color:#adb7c9;">&amp;</span><span style="color:#eb6772;">self</span><span style="color:#abb2bf;">, </span><span style="color:#eb6772;">you</span><span style="color:#abb2bf;">: </span><span style="color:#adb7c9;">&amp;</span><span style="color:#abb2bf;">Battlesnake) -&gt; Option&lt;Coord&gt; {
+</span><span style="color:#abb2bf;">        </span><span style="color:#cd74e8;">let</span><span style="color:#abb2bf;"> head </span><span style="color:#adb7c9;">= &amp;</span><span style="color:#abb2bf;">you.body[</span><span style="color:#db9d63;">0</span><span style="color:#abb2bf;">];
+</span><span style="color:#abb2bf;">        </span><span style="color:#cd74e8;">match </span><span style="color:#abb2bf;">(</span><span style="color:#eb6772;">self</span><span style="color:#abb2bf;">, head.x, head.y) {
+</span><span style="color:#abb2bf;">            (Move::Down, </span><span style="color:#adb7c9;">_</span><span style="color:#abb2bf;">, </span><span style="color:#db9d63;">1</span><span style="color:#adb7c9;">..</span><span style="color:#abb2bf;">) </span><span style="color:#adb7c9;">=&gt; </span><span style="color:#abb2bf;">Some(Coord {
+</span><span style="color:#abb2bf;">                x: head.x,
+</span><span style="color:#abb2bf;">                y: head.y </span><span style="color:#adb7c9;">- </span><span style="color:#db9d63;">1</span><span style="color:#abb2bf;">,
+</span><span style="color:#abb2bf;">            }),
+</span><span style="color:#abb2bf;">            (Move::Up, </span><span style="color:#adb7c9;">_</span><span style="color:#abb2bf;">, </span><span style="color:#adb7c9;">_</span><span style="color:#abb2bf;">) </span><span style="color:#adb7c9;">=&gt; </span><span style="color:#abb2bf;">Some(Coord {
+</span><span style="color:#abb2bf;">                x: head.x,
+</span><span style="color:#abb2bf;">                y: head.y </span><span style="color:#adb7c9;">+ </span><span style="color:#db9d63;">1</span><span style="color:#abb2bf;">,
+</span><span style="color:#abb2bf;">            }),
+</span><span style="color:#abb2bf;">            (Move::Right, </span><span style="color:#adb7c9;">_</span><span style="color:#abb2bf;">, </span><span style="color:#adb7c9;">_</span><span style="color:#abb2bf;">) </span><span style="color:#adb7c9;">=&gt; </span><span style="color:#abb2bf;">Some(Coord {
+</span><span style="color:#abb2bf;">                x: head.x </span><span style="color:#adb7c9;">+ </span><span style="color:#db9d63;">1</span><span style="color:#abb2bf;">,
+</span><span style="color:#abb2bf;">                y: head.y,
+</span><span style="color:#abb2bf;">            }),
+</span><span style="color:#abb2bf;">            (Move::Left, </span><span style="color:#db9d63;">1</span><span style="color:#adb7c9;">..</span><span style="color:#abb2bf;">, </span><span style="color:#adb7c9;">_</span><span style="color:#abb2bf;">) </span><span style="color:#adb7c9;">=&gt; </span><span style="color:#abb2bf;">Some(Coord {
+</span><span style="color:#abb2bf;">                x: head.x </span><span style="color:#adb7c9;">- </span><span style="color:#db9d63;">1</span><span style="color:#abb2bf;">,
+</span><span style="color:#abb2bf;">                y: head.y,
+</span><span style="color:#abb2bf;">            }),
+</span><span style="color:#abb2bf;">            </span><span style="color:#adb7c9;">_ =&gt; </span><span style="color:#abb2bf;">None,
+</span><span style="color:#abb2bf;">        }
+</span><span style="color:#abb2bf;">    }
+</span><span style="color:#abb2bf;">
+</span><span style="color:#abb2bf;">    </span><span style="color:#cd74e8;">fn </span><span style="color:#5cb3fa;">from_coord</span><span style="color:#abb2bf;">(</span><span style="color:#eb6772;">you</span><span style="color:#abb2bf;">: </span><span style="color:#adb7c9;">&amp;</span><span style="color:#abb2bf;">Battlesnake, </span><span style="color:#eb6772;">coord</span><span style="color:#abb2bf;">: </span><span style="color:#adb7c9;">&amp;</span><span style="color:#abb2bf;">Coord) -&gt; Option&lt;</span><span style="color:#cd74e8;">Self</span><span style="color:#abb2bf;">&gt; {
+</span><span style="color:#abb2bf;">        </span><span style="color:#cd74e8;">let</span><span style="color:#abb2bf;"> head </span><span style="color:#adb7c9;">= &amp;</span><span style="color:#abb2bf;">you.body[</span><span style="color:#db9d63;">0</span><span style="color:#abb2bf;">];
+</span><span style="color:#abb2bf;">        </span><span style="color:#cd74e8;">if</span><span style="color:#abb2bf;"> head.x </span><span style="color:#adb7c9;">==</span><span style="color:#abb2bf;"> coord.x {
+</span><span style="color:#abb2bf;">            </span><span style="color:#cd74e8;">if</span><span style="color:#abb2bf;"> head.y </span><span style="color:#adb7c9;">+ </span><span style="color:#db9d63;">1 </span><span style="color:#adb7c9;">==</span><span style="color:#abb2bf;"> coord.y {
+</span><span style="color:#abb2bf;">                Some(Move::Up)
+</span><span style="color:#abb2bf;">            } </span><span style="color:#cd74e8;">else if</span><span style="color:#abb2bf;"> coord.y </span><span style="color:#adb7c9;">+ </span><span style="color:#db9d63;">1 </span><span style="color:#adb7c9;">==</span><span style="color:#abb2bf;"> head.y {
+</span><span style="color:#abb2bf;">                Some(Move::Down)
+</span><span style="color:#abb2bf;">            } </span><span style="color:#cd74e8;">else </span><span style="color:#abb2bf;">{
+</span><span style="color:#abb2bf;">                None
+</span><span style="color:#abb2bf;">            }
+</span><span style="color:#abb2bf;">        } </span><span style="color:#cd74e8;">else if</span><span style="color:#abb2bf;"> head.y </span><span style="color:#adb7c9;">==</span><span style="color:#abb2bf;"> coord.y {
+</span><span style="color:#abb2bf;">            </span><span style="color:#cd74e8;">if</span><span style="color:#abb2bf;"> head.x </span><span style="color:#adb7c9;">+ </span><span style="color:#db9d63;">1 </span><span style="color:#adb7c9;">==</span><span style="color:#abb2bf;"> coord.x {
+</span><span style="color:#abb2bf;">                Some(Move::Right)
+</span><span style="color:#abb2bf;">            } </span><span style="color:#cd74e8;">else if</span><span style="color:#abb2bf;"> coord.x </span><span style="color:#adb7c9;">+ </span><span style="color:#db9d63;">1 </span><span style="color:#adb7c9;">==</span><span style="color:#abb2bf;"> head.x {
+</span><span style="color:#abb2bf;">                Some(Move::Left)
+</span><span style="color:#abb2bf;">            } </span><span style="color:#cd74e8;">else </span><span style="color:#abb2bf;">{
+</span><span style="color:#abb2bf;">                None
+</span><span style="color:#abb2bf;">            }
+</span><span style="color:#abb2bf;">        } </span><span style="color:#cd74e8;">else </span><span style="color:#abb2bf;">{
+</span><span style="color:#abb2bf;">            None
+</span><span style="color:#abb2bf;">        }
+</span><span style="color:#abb2bf;">    }
+</span><span style="color:#abb2bf;">
+</span><span style="color:#abb2bf;">    </span><span style="color:#cd74e8;">fn </span><span style="color:#5cb3fa;">all</span><span style="color:#abb2bf;">() -&gt; Vec&lt;</span><span style="color:#cd74e8;">Self</span><span style="color:#abb2bf;">&gt; {
+</span><span style="color:#abb2bf;">        vec![</span><span style="color:#cd74e8;">Self</span><span style="color:#abb2bf;">::Left, </span><span style="color:#cd74e8;">Self</span><span style="color:#abb2bf;">::Right, </span><span style="color:#cd74e8;">Self</span><span style="color:#abb2bf;">::Up, </span><span style="color:#cd74e8;">Self</span><span style="color:#abb2bf;">::Down]
+</span><span style="color:#abb2bf;">    }
+</span><span style="color:#abb2bf;">}
+</span></code></pre>
+<p>You will notice that I return an Option type from both of these as there are are invalid inputs and in those cases I just return <code>None</code>.
+This enables me to use functions like <code>flat_map</code> to convert a vector of moves to coordinates and skip the ones that are invalid.</p>
+<h2 id="link-the-world-is-finite-don-t-leave-it"><a class="zola-anchor" href="#link-the-world-is-finite-don-t-leave-it" aria-label="Anchor link for: link-the-world-is-finite-don-t-leave-it">🔗</a>🔗The world is finite; don’t leave it</h2>
+<p>In the standard game the board is 11 by 11 in size.
+We need to be careful that we do not drive our snake off the end of the world.
+To avoid this problem I created a function to use as a filter:</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#6c7079;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#cd74e8;">fn </span><span style="color:#5cb3fa;">in_bounds</span><span style="color:#abb2bf;">(</span><span style="color:#eb6772;">board</span><span style="color:#abb2bf;">: </span><span style="color:#adb7c9;">&amp;</span><span style="color:#abb2bf;">Board, </span><span style="color:#eb6772;">coord</span><span style="color:#abb2bf;">: </span><span style="color:#adb7c9;">&amp;</span><span style="color:#abb2bf;">Coord) -&gt; </span><span style="color:#cd74e8;">bool </span><span style="color:#abb2bf;">{
+</span><span style="color:#abb2bf;">    coord.x </span><span style="color:#adb7c9;">&lt;</span><span style="color:#abb2bf;"> board.width </span><span style="color:#adb7c9;">&amp;&amp;</span><span style="color:#abb2bf;"> coord.y </span><span style="color:#adb7c9;">&lt;</span><span style="color:#abb2bf;"> board.height
+</span><span style="color:#abb2bf;">}
+</span></code></pre>
+<h2 id="niave-route-planning"><a class="zola-anchor" href="#niave-route-planning" aria-label="Anchor link for: niave-route-planning">🔗</a>Niave Route Planning</h2>
+<p>My snake is rather dumb, so it only considers the next possible moves for now.
+In-order to do that I created these three functions for selecting my next move:</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#6c7079;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#cd74e8;">fn </span><span style="color:#5cb3fa;">manhattan_distance</span><span style="color:#abb2bf;">(</span><span style="color:#eb6772;">a</span><span style="color:#abb2bf;">: </span><span style="color:#adb7c9;">&amp;</span><span style="color:#abb2bf;">Coord, </span><span style="color:#eb6772;">b</span><span style="color:#abb2bf;">: </span><span style="color:#adb7c9;">&amp;</span><span style="color:#abb2bf;">Coord) -&gt; </span><span style="color:#cd74e8;">u32 </span><span style="color:#abb2bf;">{
+</span><span style="color:#abb2bf;">    a.x.</span><span style="color:#5ebfcc;">abs_diff</span><span style="color:#abb2bf;">(b.x) </span><span style="color:#adb7c9;">+</span><span style="color:#abb2bf;"> a.y.</span><span style="color:#5ebfcc;">abs_diff</span><span style="color:#abb2bf;">(b.y)
+</span><span style="color:#abb2bf;">}
+</span><span style="color:#abb2bf;">
+</span><span style="color:#cd74e8;">fn </span><span style="color:#5cb3fa;">select_toward</span><span style="color:#abb2bf;">&lt;</span><span style="color:#cd74e8;">&#39;a</span><span style="color:#abb2bf;">&gt;(</span><span style="color:#eb6772;">coords</span><span style="color:#abb2bf;">: </span><span style="color:#adb7c9;">&amp;</span><span style="color:#cd74e8;">&#39;a</span><span style="color:#abb2bf;"> [Coord], </span><span style="color:#eb6772;">target</span><span style="color:#abb2bf;">: </span><span style="color:#adb7c9;">&amp;</span><span style="color:#abb2bf;">Coord) -&gt; </span><span style="color:#adb7c9;">&amp;</span><span style="color:#cd74e8;">&#39;a</span><span style="color:#abb2bf;"> Coord {
+</span><span style="color:#abb2bf;">    coords
+</span><span style="color:#abb2bf;">        .</span><span style="color:#5ebfcc;">iter</span><span style="color:#abb2bf;">()
+</span><span style="color:#abb2bf;">        .</span><span style="color:#5ebfcc;">map</span><span style="color:#abb2bf;">(|</span><span style="color:#eb6772;">c</span><span style="color:#abb2bf;">| (c, </span><span style="color:#5ebfcc;">manhattan_distance</span><span style="color:#abb2bf;">(</span><span style="color:#adb7c9;">&amp;</span><span style="color:#abb2bf;">c, target)))
+</span><span style="color:#abb2bf;">        .</span><span style="color:#5ebfcc;">min_by</span><span style="color:#abb2bf;">(|(_, </span><span style="color:#eb6772;">ad</span><span style="color:#abb2bf;">), (_, </span><span style="color:#eb6772;">bd</span><span style="color:#abb2bf;">)| ad.</span><span style="color:#5ebfcc;">cmp</span><span style="color:#abb2bf;">(bd))
+</span><span style="color:#abb2bf;">        .</span><span style="color:#5ebfcc;">map</span><span style="color:#abb2bf;">(|(</span><span style="color:#eb6772;">m</span><span style="color:#abb2bf;">, _)| m)
+</span><span style="color:#abb2bf;">        .</span><span style="color:#5ebfcc;">unwrap</span><span style="color:#abb2bf;">()
+</span><span style="color:#abb2bf;">}
+</span><span style="color:#abb2bf;">
+</span><span style="color:#cd74e8;">fn </span><span style="color:#5cb3fa;">select_away</span><span style="color:#abb2bf;">&lt;</span><span style="color:#cd74e8;">&#39;a</span><span style="color:#abb2bf;">&gt;(</span><span style="color:#eb6772;">coords</span><span style="color:#abb2bf;">: </span><span style="color:#adb7c9;">&amp;</span><span style="color:#cd74e8;">&#39;a</span><span style="color:#abb2bf;"> [Coord], </span><span style="color:#eb6772;">target</span><span style="color:#abb2bf;">: </span><span style="color:#adb7c9;">&amp;</span><span style="color:#abb2bf;">Coord) -&gt; </span><span style="color:#adb7c9;">&amp;</span><span style="color:#cd74e8;">&#39;a</span><span style="color:#abb2bf;"> Coord {
+</span><span style="color:#abb2bf;">    coords
+</span><span style="color:#abb2bf;">        .</span><span style="color:#5ebfcc;">iter</span><span style="color:#abb2bf;">()
+</span><span style="color:#abb2bf;">        .</span><span style="color:#5ebfcc;">map</span><span style="color:#abb2bf;">(|</span><span style="color:#eb6772;">c</span><span style="color:#abb2bf;">| (c, </span><span style="color:#5ebfcc;">manhattan_distance</span><span style="color:#abb2bf;">(</span><span style="color:#adb7c9;">&amp;</span><span style="color:#abb2bf;">c, target)))
+</span><span style="color:#abb2bf;">        .</span><span style="color:#5ebfcc;">max_by</span><span style="color:#abb2bf;">(|(_, </span><span style="color:#eb6772;">ad</span><span style="color:#abb2bf;">), (_, </span><span style="color:#eb6772;">bd</span><span style="color:#abb2bf;">)| ad.</span><span style="color:#5ebfcc;">cmp</span><span style="color:#abb2bf;">(bd))
+</span><span style="color:#abb2bf;">        .</span><span style="color:#5ebfcc;">map</span><span style="color:#abb2bf;">(|(</span><span style="color:#eb6772;">m</span><span style="color:#abb2bf;">, _)| m)
+</span><span style="color:#abb2bf;">        .</span><span style="color:#5ebfcc;">unwrap</span><span style="color:#abb2bf;">()
+</span><span style="color:#abb2bf;">}
+</span></code></pre>
+<h2 id="making-my-lora-unique"><a class="zola-anchor" href="#making-my-lora-unique" aria-label="Anchor link for: making-my-lora-unique">🔗</a>Making my Lora unique</h2>
+<p>Here is how I make my snake green with the specific head and tail I chose:</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#6c7079;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#cd74e8;">pub fn </span><span style="color:#5cb3fa;">info</span><span style="color:#abb2bf;">() -&gt; Value {
+</span><span style="color:#abb2bf;">    info!(</span><span style="color:#9acc76;">&quot;INFO&quot;</span><span style="color:#abb2bf;">);
+</span><span style="color:#abb2bf;">
+</span><span style="color:#abb2bf;">    </span><span style="color:#cd74e8;">return </span><span style="color:#abb2bf;">json!({
+</span><span style="color:#abb2bf;">        </span><span style="color:#9acc76;">&quot;apiversion&quot;</span><span style="color:#abb2bf;">: </span><span style="color:#9acc76;">&quot;1&quot;</span><span style="color:#abb2bf;">,
+</span><span style="color:#abb2bf;">        </span><span style="color:#9acc76;">&quot;author&quot;</span><span style="color:#abb2bf;">: </span><span style="color:#9acc76;">&quot;Lethal Lora&quot;</span><span style="color:#abb2bf;">,
+</span><span style="color:#abb2bf;">        </span><span style="color:#9acc76;">&quot;color&quot;</span><span style="color:#abb2bf;">: </span><span style="color:#9acc76;">&quot;#8ceb34&quot;</span><span style="color:#abb2bf;">,
+</span><span style="color:#abb2bf;">        </span><span style="color:#9acc76;">&quot;head&quot;</span><span style="color:#abb2bf;">: </span><span style="color:#9acc76;">&quot;fang&quot;</span><span style="color:#abb2bf;">,
+</span><span style="color:#abb2bf;">        </span><span style="color:#9acc76;">&quot;tail&quot;</span><span style="color:#abb2bf;">: </span><span style="color:#9acc76;">&quot;pixel&quot;</span><span style="color:#abb2bf;">,
+</span><span style="color:#abb2bf;">    });
+</span><span style="color:#abb2bf;">}
+</span></code></pre>
+<h2 id="choosing-a-move"><a class="zola-anchor" href="#choosing-a-move" aria-label="Anchor link for: choosing-a-move">🔗</a>Choosing a Move</h2>
+<p>See <a href="https://rootware.github.io/rootware_zola/posts/battlesnake/./logic.rs">the full source of my logic.rs here</a>.</p>
+
+  </main>
+  <p class="tags">
+        Tags:
+          <a href="https://rootware.github.io/rootware_zola/tags/talks/">#Talks</a>
+  </p>
+<footer>
+    © 2023 Shah Saad Alam<br>
+    <div class="social-links">
+        <a href="https://github.com/rootware" target="_blank" rel="noopener noreferrer" title="GitHub" class="social-icon"><i data-feather="github"></i></a>
+        <a href="https://scholar.google.com/citations?user=dpsqpvYAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" title="Google Scholar" class="social-icon"><i data-feather="rss"></i></a>
+    </div> 
+</footer>
+<script>
+    feather.replace();
+    const themeToggle = document.querySelector('.theme-toggle');
+    const currentTheme = localStorage.getItem('theme');
+
+    // Set the initial theme based on user preference or localStorage
+    if (currentTheme) {
+        document.body.setAttribute('data-theme', currentTheme);
+        if (currentTheme === 'dark') {
+            themeToggle.innerHTML = '<i data-feather="sun"></i>';
+            feather.replace();
+        }
+    }
+
+    themeToggle.addEventListener('click', function() {
+        let theme = 'light';
+
+        // Add the transition class
+        document.body.classList.add('theme-transition');
+
+        if (document.body.getAttribute('data-theme') !== 'dark') {
+            theme = 'dark';
+            themeToggle.innerHTML = '<i data-feather="sun"></i>';
+        } else {
+            themeToggle.innerHTML = '<i data-feather="moon"></i>';
+        }
+        feather.replace();
+        document.body.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+
+        // Remove the transition class after 0.5s
+        setTimeout(() => {
+            document.body.classList.remove('theme-transition');
+        }, 500);
+    });
+</script>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <meta name="title" content="">
+<meta property="og:site_name" content="">
+<meta property="og:type" content="website">
+<meta property="og:title" content="">
+<meta property="og:description" content="">
+<meta property="og:url" content="https://rootware.github.io/rootware_zola/">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="">
+<meta name="twitter:description" content="">
+<meta name="twitter:url" content="https://rootware.github.io/rootware_zola/">
+
+<meta name="twitter:site" content="@mrkaran_">
+
+<meta name="twitter:creator" content="@mrkaran_">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=IBM+Plex+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://rootware.github.io/rootware_zola/styles/main.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.1/feather.min.js" integrity="sha512-4lykFR6C2W55I60sYddEGjieC2fU79R7GUtaqr3DzmNbo0vSaO1MfUjMoTFYYuedjfEix6uV9jVTtRCSBU/Xiw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script defer data-domain="mrkaran.dev" src="https://pls.mrkaran.dev/js/script.js"></script>
+</head>
+<body>
+<header>
+    <a href="https://rootware.github.io/rootware_zola/" class="title">
+        <h2 class="name"></h2>
+    </a>
+    <nav>
+        <div class="nav-items">
+            <a href="https://rootware.github.io/rootware_zola/">Home</a>
+            <a href="https://rootware.github.io/rootware_zola/posts/">Posts</a>
+            <a href="https://rootware.github.io/rootware_zola/talks.md">CV and Resume</a>
+            <a href="https://rootware.github.io/rootware_zola/contact/">Contact</a></div>
+        <button class="theme-toggle" title="Toggle Dark Mode">
+            <i data-feather="moon"></i>
+        </button>
+    </nav>
+</header>
+
+  <main>
+    <small>
+      <div>
+        
+        
+          <a href="https:&#x2F;&#x2F;rootware.github.io&#x2F;rootware_zola&#x2F;tags&#x2F;talks&#x2F;">#Talks</a>&nbsp;
+        
+      </div>
+    </small>
+  </main>
+<footer>
+    © 2023 Shah Saad Alam<br>
+    <div class="social-links">
+        <a href="https://github.com/rootware" target="_blank" rel="noopener noreferrer" title="GitHub" class="social-icon"><i data-feather="github"></i></a>
+        <a href="https://scholar.google.com/citations?user=dpsqpvYAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" title="Google Scholar" class="social-icon"><i data-feather="rss"></i></a>
+    </div> 
+</footer>
+<script>
+    feather.replace();
+    const themeToggle = document.querySelector('.theme-toggle');
+    const currentTheme = localStorage.getItem('theme');
+
+    // Set the initial theme based on user preference or localStorage
+    if (currentTheme) {
+        document.body.setAttribute('data-theme', currentTheme);
+        if (currentTheme === 'dark') {
+            themeToggle.innerHTML = '<i data-feather="sun"></i>';
+            feather.replace();
+        }
+    }
+
+    themeToggle.addEventListener('click', function() {
+        let theme = 'light';
+
+        // Add the transition class
+        document.body.classList.add('theme-transition');
+
+        if (document.body.getAttribute('data-theme') !== 'dark') {
+            theme = 'dark';
+            themeToggle.innerHTML = '<i data-feather="sun"></i>';
+        } else {
+            themeToggle.innerHTML = '<i data-feather="moon"></i>';
+        }
+        feather.replace();
+        document.body.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+
+        // Remove the transition class after 0.5s
+        setTimeout(() => {
+            document.body.classList.remove('theme-transition');
+        }, 500);
+    });
+</script>
+</html>
