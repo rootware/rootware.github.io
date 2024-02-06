@@ -32,7 +32,7 @@ url = "@/posts/_index.md"
 
 [[extra.main_menu]]
 name = "CV and Resume"
-url = "https://rootware.github.io/rootware_zola/talks.md"
+url = "@/talks.md"
 
 # [[extra.main_menu]]
 # name = "TIL"
