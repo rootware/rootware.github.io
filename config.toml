@@ -1,6 +1,6 @@
 # The URL the site will be built for
 # base_url = "https://tylerjw.dev"
-base_url = "https://rootware.github.io"
+base_url = "https://rootware.github.io/rootware_zola/"
 
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = true
