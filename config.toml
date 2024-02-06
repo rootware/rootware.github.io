@@ -21,6 +21,8 @@ render_emoji = true
 smart_punctuation = true
 [extra]
 date_format="%d %b, %Y"
+atex_enable = true
+katex_auto_render = true
 
 [[extra.main_menu]]
 name = "Posts"
