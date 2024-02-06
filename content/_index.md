@@ -9,7 +9,7 @@ title = "Home"
   <div class="home-content">
 
 I'm Shah.
-I work at  ... $$ \pi $$
+I work at  ... {{ katex(body="\KaTeX") }}
 
   </div>
 
