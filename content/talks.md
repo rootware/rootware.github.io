@@ -2,11 +2,8 @@
 title = "CV and Resume"
 +++
 
-## 2024
+## Resume
 
-- [Boulder Rust - C++ Rust Interop](/posts/rust-cpp-interop)
+- Scientific Computation focused resume: [Resume](/pdf/Shah_Saad_Alam_CV___Scientific_Computation.pdf)
 
-## 2023
 
-- [ROSCON - Parameters Should be Boring](/posts/roscon23-parameters)
-- [ROSCON - Retro ROS 2 Launch](/posts/xml-launch)
