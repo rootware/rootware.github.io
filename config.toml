@@ -33,7 +33,7 @@ url = "@/posts/_index.md"
 
 [[extra.main_menu]]
 name = "CV and Resume"
-url = "@/talks.md"
+url = "@/resume.md"
 
 # [[extra.main_menu]]
 # name = "TIL"
