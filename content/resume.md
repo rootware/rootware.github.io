@@ -11,7 +11,7 @@ title = "CV and Resume"
 
 - **MS**: Rice University, 2016, Computational Space and Plasma Physics
 
-- **BA**: Amherst College, 2015, Thesis:*Laser Cooling TlF*
+- **BA**: Amherst College, 2015, Thesis: *Laser Cooling TlF*
 
 ## Skills
 
