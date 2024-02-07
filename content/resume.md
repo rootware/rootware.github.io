@@ -13,7 +13,7 @@ title = "CV and Resume"
 
 ## Experience
 - **Postdoctoral Research Associate**, JILA, Univ of Colorado, Boulder
-    - Reinforcement Learning for Quantum Sensor Design, Quantum Circuits Design, Decorrelated Quantum Sensing
+    - Reinforcement Learning (Double Deep Q-Netowrks) for Quantum Sensor Design, Quantum Circuits Design, Decorrelated Quantum Sensing
     - Bayesian and Statistical Theory for Quantum Systems, Quantum Information
     - Noisy Quantum Systems and Quantum Trajectories
     - Pytorch, Libtorch, Python, C++, Rust, Rust and C++ Interop
@@ -21,7 +21,7 @@ title = "CV and Resume"
     - Quantum Many Body, One Dimensional Quantum Systems, Quantum Spinor Gases
     - Physics Informed and Interpretable Neural Networks for Quantum Spin Systems
     - Machine Learning for Quantum Matter
-    - Mathematica, Python, TensorFlow
+    - Mathematica, Python, TensorFlow, Convolutional Neural Networks
 - **MS Researcher in Computational Space Plasma**, Rice University
     - Modelling of Radiation Belts on HPC
     - Data Analysis of mission data
