@@ -2,7 +2,7 @@
 title = "Home"
 +++
 
-# 👋🏻 Hi, I'm Shah
+#  Hi, I'm Shah
 
 <div class="home-container">
 

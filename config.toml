@@ -27,9 +27,9 @@ date_format="%d %b, %Y"
 name = "Posts"
 url = "@/posts/_index.md"
 
-# [[extra.main_menu]]
-# name = "Projects"
-# url = "@/projects/_index.md"
+[[extra.main_menu]]
+name = "Projects"
+url = "@/projects/_index.md"
 
 [[extra.main_menu]]
 name = "CV and Resume"
